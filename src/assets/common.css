@@ -1,0 +1,104 @@
+.absolute {
+  position: absolute;
+}
+.backgroundHeader {
+  background: #F7F9F9;
+  border-radius: 10px;
+}
+.buttonBackground {
+    background: #007bff;
+  }
+.center {
+  text-align: center;
+}
+.colorSuccess {
+  color: #155724;
+}
+.dataWidth {
+  height: 32px;
+}
+.detailContener {
+  margin: auto;
+  margin-bottom: 40px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  width: 80%;
+}
+.floatLeft {
+  float: left;
+}
+.floatRight {
+  float: right;
+}
+.headerContainer {
+  margin: auto;
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  width: 80%;
+}
+.headerTitle {
+  width: 80%;
+  margin: auto;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.invalid {
+  color: #dc3545;
+}
+.invalidBorder {
+  border: 1px solid #dc3545;
+}
+.left {
+  text-align: left;
+}
+.login {
+  background: #394960;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.main {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  width: 90%;
+  margin: 40px auto auto auto;
+}
+.marginAuto {
+  margin: auto;
+}
+.notAllowed {
+  cursor: not-allowed;
+}
+.opacity5 {
+  opacity: 0.5
+}
+.pointer {
+  cursor: pointer;
+}
+.right {
+  text-align: right;
+}
+.row {
+  height: 40px;
+  margin-left: 1px;
+}
+@media only screen and (min-width: 901px) {
+  .displayNoneBig {
+    display: none;
+  }
+}
+@media only screen and (max-width: 900px) and (min-width: 720px) {
+  .displayNoneMedium {
+    display: none;
+  }
+}
+@media only screen and (max-width: 719px) {
+  .displayNoneSmall {
+    display: none;
+  }
+}
