@@ -5,3 +5,6 @@ The panel helps in dealing with accounts, customers, orders and products in both
 The project has been written in following technologies:
 
 Vue, Vuex, Webpack
+
+
+-- project not completed - in progress --
