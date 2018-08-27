@@ -2,10 +2,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueCookies from 'vue-cookies'
+import Vuelidate from 'vuelidate'
+import VueRx from 'vue-rx'
 import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
-import Vuelidate from 'vuelidate'
 import Polyfill from './polyfill.js'
 
 import { store } from './store/store'
@@ -20,6 +21,7 @@ Promise.prototype.finally = Polyfill
 Vue.use(BootstrapVue)
 Vue.use(VueCookies)
 Vue.use(Vuelidate)
+Vue.use(VueRx)
 
 Vue.config.productionTip = false
 

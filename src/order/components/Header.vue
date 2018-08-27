@@ -32,6 +32,7 @@
       </div>
       <div class="right absoluteButton first">
         <button
+          @click="searchOrder"
           :disabled="!selected.orderOption || selected.order < 1 || $v.selected.order.$error"
           type="button"
           class="btn btn-primary absoluteWidth"
@@ -65,6 +66,7 @@
       </div>
       <div class="right absoluteButton third">
         <button
+          @click="searchAction"
           :disabled="!selected.actionOption || selected.action < 1 || $v.selected.action.$error"
           type="button"
           class="btn btn-primary absoluteWidth"
@@ -76,6 +78,8 @@
 
 <script>
 import { required, numeric } from 'vuelidate/lib/validators'
+import MessageService from '../../services/messageService'
+import OrderService from '../../services/orderService'
 import Config from '../../config'
 import Labels from '../../labels'
 
@@ -102,6 +106,28 @@ export default {
     handleOrder () {
       this.$v.selected.order.$touch()
       this.selected.actionOption = null
+    },
+    searchAction () {
+    },
+    searchOrder () {
+      let params = {
+        action: 'order',
+        db: this.selected.orderOption === 1 ? 'new' : 'old',
+        id: this.selected.order
+      }
+      OrderService.getOrder(params)
+        .then(response => {
+          if (response.data.success !== false) {
+            params.data = response.data
+            this.$store.dispatch('orderData', params)
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => {
+          this.$store.dispatch('orderEmpty')
+          MessageService.error.next(err.message)
+        })
     }
   },
   validations: {

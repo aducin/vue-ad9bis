@@ -1,19 +1,24 @@
 <template>
   <div>
-    <h2 v-if="!orderAction">{{ msg }}</h2>
+    <h2 v-if="!orderData.action">{{ labels.detailsDefault }}</h2>
+    <p v-else>{{ orderData }}</p>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Labels from '../../labels'
+
 export default {
   name: 'OrderDetail',
   data () {
     return {
-      orderAction: this.action,
-      msg: 'Wybierz akcję i numer zamówienia'
+      labels: Labels.order
     }
   },
-  props: ['action']
+  computed: mapGetters([
+    'orderData'
+  ])
 }
 </script>
 

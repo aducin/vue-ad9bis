@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <account-header></account-header>
-    <account-detail v-bind:action="action"></account-detail>
+    <account-detail></account-detail>
   </div>
 </template>
 
@@ -14,11 +14,6 @@ export default {
   components: {
     'account-detail': AccountDetail,
     'account-header': AccountHeader
-  },
-  data () {
-    return {
-      action: null
-    }
   }
 }
 </script>

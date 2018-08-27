@@ -1,24 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
-
-const emptyState = {
-  display: false,
-  content: undefined,
-  type: undefined
+const defaultOrder = {
+  action: undefined,
+  db: undefined,
+  id: null,
+  data: {}
 }
+
+Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
     error: false,
     logged: false,
-    message: {...emptyState},
     postal: {
       amount: 0,
       list: [],
       loading: false
     },
+    order: {...defaultOrder},
     product: {
       categories: [],
       lists: false,
@@ -27,8 +28,8 @@ export const store = new Vuex.Store({
     token: undefined
   },
   getters: {
-    messageObj: state => {
-      return state.message
+    orderData: state => {
+      return state.order
     },
     postalAmount: state => {
       return state.postal.amount
@@ -44,11 +45,14 @@ export const store = new Vuex.Store({
     },
     productManufactorers: state => {
       return state.product.manufactorers
+    },
+    storeError: state => {
+      return state.error
     }
   },
   mutations: {
-    emptyMessage: (state) => {
-      state.message = emptyState
+    removeError: (state) => {
+      state.error = false
     },
     setError: (state, payload) => {
       state.error = payload
@@ -57,12 +61,16 @@ export const store = new Vuex.Store({
       state.logged = false
       state.token = undefined
     },
-    setMessage: (state, payload) => {
-      state.message = {
-        display: true,
-        type: payload.type,
-        content: payload.content
+    setOrderData: (state, payload) => {
+      state.order = {
+        action: payload.action,
+        data: payload.data,
+        db: payload.db,
+        id: payload.id
       }
+    },
+    setOrderEmpty: (state) => {
+      state.order = {...defaultOrder}
     },
     setPostalData: (state, payload) => {
       state.error = false
@@ -80,6 +88,14 @@ export const store = new Vuex.Store({
     setToken: (state, payload) => {
       state.logged = true
       state.token = payload
+    }
+  },
+  actions: {
+    orderData: ({ commit }, payload) => {
+      commit('setOrderData', payload)
+    },
+    orderEmpty: ({ commit }) => {
+      commit('setOrderEmpty')
     }
   }
 })

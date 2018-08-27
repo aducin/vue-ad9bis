@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import MessageService from '../services/messageService'
 import Config from '../config'
 import Labels from '../labels'
 
@@ -38,14 +39,11 @@ export default {
   },
   methods: {
     logout () {
-      this.$store.commit('setMessage', { type: 'success', content: this.message })
+      MessageService.success.next(this.message)
       setTimeout(() => {
         localStorage.setItem('vueAd9bisToken', null)
         localStorage.setItem('vueAnimated', true)
-        console.log(9999)
-        console.log(localStorage.getItem('vueAnimated'))
         this.$cookies.remove('vueAd9bisCookie')
-        this.$store.commit('emptyMessage')
         this.$router.push({name: 'login'})
       }, Config.timer)
     }

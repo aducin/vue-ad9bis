@@ -1,7 +1,7 @@
 <template>
   <div v-bind:class="[self === 'login' ? 'login' : 'main']" id="app">
     <header-links v-if="self !== 'login'"></header-links>
-    <message v-if="messageObj.display" v-bind:data="messageObj" class="messageContent"></message>
+    <message v-if="display" v-bind:data="display" class="messageContent"></message>
     <transition mode="out-in"
       enter-active="enterTransition"
       :enter-active-class="enter"
@@ -13,9 +13,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 import HeaderLinks from './shared/HeaderLinks.vue'
+import MessageService from './services/messageService'
 import LoginService from './services/loginService'
 import Message from './shared/Message.vue'
 import Config from './config'
@@ -28,15 +27,19 @@ export default {
   },
   data () {
     return {
+      display: false,
       enter: undefined,
       leave: undefined,
       self: undefined
     }
   },
-  computed: mapGetters([
-    'messageObj'
-  ]),
   methods: {
+    displayMessage (type, content) {
+      this.display = {type, content}
+      setTimeout(() => {
+        this.display = false
+      }, Config.timer)
+    },
     getToken () {
       let token = localStorage.getItem('vueAd9bisToken')
       if (!token) {
@@ -84,6 +87,8 @@ export default {
     }
   },
   created () {
+    MessageService.error.subscribe(message => this.displayMessage('error', message))
+    MessageService.success.subscribe(message => this.displayMessage('success', message))
     this.setSelf()
     this.init()
   },
@@ -92,7 +97,7 @@ export default {
     if (!this.$store.state.logged || this.self === 'login') {
       this.init()
     }
-  },
+  }
 }
 </script>
 

@@ -33,6 +33,7 @@ const labels = {
     choose: 'Proszę wybrać',
     chooseOrder: 'Wybierz zamówienie',
     chooseAction: 'Wybierz akcję',
+    detailsDefault: 'Wybierz akcję i numer zamówienia',
     title: 'Manager zamówień Ad9BIS'
   },
   placeholders: {
