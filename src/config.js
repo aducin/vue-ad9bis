@@ -1,6 +1,8 @@
 const config = {
   currency: 'zł',
   defaultUrl: 'product',
+  linkUrl: 'http://ad9bis.vot.pl/',
+  linkSuffix: 'wagony-towarowe/',
   options: {
     actions: [
       { value: 1, text: 'Sprawdź kupon' },

@@ -3,14 +3,13 @@ import axios from 'axios'
 import Config from '../config'
 
 class OrderService {
-  token = ''
   // constructor () {}
 
   getOrder (params) {
     return axios.get(Config.url, {params})
   }
-  setToken (token) {
-    this.token = token
+  setEven (params) {
+    return axios.get(Config.url, {params})
   }
 }
 

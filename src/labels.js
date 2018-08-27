@@ -13,7 +13,9 @@ const labels = {
     type: 'Typ rachunku'
   },
   buttons: {
+    clear: 'Usuń',
     close: 'Zamknij',
+    even: 'Wyrównaj ilości',
     save: 'Zapisz'
   },
   customer: {
@@ -39,8 +41,12 @@ const labels = {
       new: 'nowy panel',
       old: 'stary panel'
     },
+    deliveryHide: 'Schowaj numer',
+    deliveryNumber: 'Prześlij numer wysyłki',
+    deliveryNumberFill: 'Wprowadź numer wysyłki',
     detailsDefault: 'Wybierz akcję i numer zamówienia',
     detailsHeader: 'Szczegóły zamówienia nr',
+    edition: 'Pełna edycja',
     email: 'Adres e-mail:',
     title: 'Manager zamówień Ad9BIS'
   },
@@ -50,6 +56,7 @@ const labels = {
     email: 'Wpisz adres',
     login: 'Podaj login',
     name: 'Podaj nazwę',
+    number: 'Podaj numer',
     password: 'Podaj hasło'
   },
   postal: {

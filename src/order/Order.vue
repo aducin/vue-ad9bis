@@ -24,40 +24,58 @@ export default {
     'account-header': AccountHeader
   },
   methods: {
+    checkAction (dispatch) {
+      if (this.$router.currentRoute.name !== 'order') {
+        if (this.$store.state.token) {
+          this.setAction()
+        }
+      } else if (dispatch) {
+        this.$store.dispatch('orderEmpty')
+      }
+    },
     setAction () {
+      let promise
       this.action = this.$router.currentRoute.name
       this.params = this.$route.params
+      this.params.action = 'order'
+      this.params.token = this.$store.state.token
       if (this.action === 'orderDetails') {
-        this.params.action = 'order'
-        OrderService.getOrder(this.params)
-          .then(response => {
-            if (response.data.success !== false) {
-              this.params.data = response.data
-              this.$store.dispatch('orderData', this.params)
-            } else {
-              throw new Error(response.data.reason)
-            }
-          })
-          .catch(err => {
-            this.$store.dispatch('orderEmpty')
-            MessageService.error.next(err.message)
-          })
+        promise = OrderService.getOrder(this.params)
+      } else if (this.action === 'orderEven') {
+        this.params.even = true
+        promise = OrderService.setEven(this.params)
       }
+      promise
+        .then(response => {
+          if (response.data.success !== false) {
+            if (this.action === 'orderEven') {
+              this.params.action = 'even'
+            }
+            this.params.data = response.data
+            this.$store.dispatch(this.action, this.params)
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => {
+          this.$store.dispatch('orderEmpty')
+          MessageService.error.next(err.message)
+        })
     }
   },
   watch: {
+    '$store.state.token' () {
+      this.checkAction(false)
+    },
     '$route' () {
-      if (this.$router.currentRoute.name !== 'order') {
-        this.setAction()
-      } else {
-        this.$store.dispatch('orderEmpty')
-      }
+      this.checkAction(true)
     }
   },
   created () {
-    if (this.$router.currentRoute.name !== 'order') {
-      this.setAction()
-    }
+    this.checkAction(false)
+  },
+  destroyed () {
+    this.$store.dispatch('orderEmpty')
   }
 }
 </script>

@@ -30,6 +30,9 @@ export const store = new Vuex.Store({
     token: undefined
   },
   getters: {
+    apiToken: state => {
+      return state.token
+    },
     orderData: state => {
       return state.order
     },
@@ -81,6 +84,16 @@ export const store = new Vuex.Store({
     setOrderEmpty: (state) => {
       state.order = {...defaultOrder}
     },
+    setOrderEven: (state, payload) => {
+      state.order = {
+        action: payload.action,
+        card: {},
+        customer: {},
+        data: payload.data,
+        db: payload.db,
+        id: payload.id
+      }
+    },
     setPostalData: (state, payload) => {
       state.error = false
       state.postal.amount = payload.amount
@@ -100,11 +113,14 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    orderData: ({ commit }, payload) => {
+    orderDetails: ({ commit }, payload) => {
       commit('setOrderData', payload)
     },
     orderEmpty: ({ commit }) => {
       commit('setOrderEmpty')
+    },
+    orderEven: ({ commit }, payload) => {
+      commit('setOrderEven', payload)
     }
   }
 })
