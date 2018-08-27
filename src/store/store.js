@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 const defaultOrder = {
   action: undefined,
+  card: {},
+  customer: {},
   db: undefined,
   id: null,
   data: {}
@@ -64,7 +66,14 @@ export const store = new Vuex.Store({
     setOrderData: (state, payload) => {
       state.order = {
         action: payload.action,
-        data: payload.data,
+        card: payload.data.cartDetails,
+        customer: payload.data.customer,
+        data: {
+          reference: payload.data.reference,
+          totalPaid: payload.data.totalPaid,
+          totalProduct: payload.data.totalProduct,
+          totalShipment: payload.data.totalShipment
+        },
         db: payload.db,
         id: payload.id
       }

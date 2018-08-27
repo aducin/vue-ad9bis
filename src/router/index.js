@@ -5,6 +5,7 @@ import Account from '@/account/Account'
 import Customer from '@/customer/Customer'
 import Login from '@/login/Login'
 import Order from '@/order/Order'
+import OrderDetail from '@/order/components/Detail'
 import Postal from '@/postal/Postal'
 import Product from '@/product/Product'
 
@@ -30,7 +31,14 @@ export default new Router({
     {
       path: '/order',
       name: 'order',
-      component: Order
+      component: Order,
+      children: [
+        {
+          path: ':db/:id',
+          name: 'orderDetails',
+          component: OrderDetail
+        }
+      ]
     },
     {
       path: '/postal',

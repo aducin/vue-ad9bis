@@ -78,8 +78,6 @@
 
 <script>
 import { required, numeric } from 'vuelidate/lib/validators'
-import MessageService from '../../services/messageService'
-import OrderService from '../../services/orderService'
 import Config from '../../config'
 import Labels from '../../labels'
 
@@ -110,24 +108,8 @@ export default {
     searchAction () {
     },
     searchOrder () {
-      let params = {
-        action: 'order',
-        db: this.selected.orderOption === 1 ? 'new' : 'old',
-        id: this.selected.order
-      }
-      OrderService.getOrder(params)
-        .then(response => {
-          if (response.data.success !== false) {
-            params.data = response.data
-            this.$store.dispatch('orderData', params)
-          } else {
-            throw new Error(response.data.reason)
-          }
-        })
-        .catch(err => {
-          this.$store.dispatch('orderEmpty')
-          MessageService.error.next(err.message)
-        })
+      let db = this.selected.orderOption === 1 ? 'new' : 'old'
+      this.$router.push({ name: 'orderDetails', params: {db, id: this.selected.order} })
     }
   },
   validations: {

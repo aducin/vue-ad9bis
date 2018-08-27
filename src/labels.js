@@ -30,10 +30,18 @@ const labels = {
   },
   logout: 'Zostałeś skutecznie wylogowany',
   order: {
+    amount: 'Kwota (zł):',
     choose: 'Proszę wybrać',
     chooseOrder: 'Wybierz zamówienie',
     chooseAction: 'Wybierz akcję',
+    customer: 'Klient:',
+    db: {
+      new: 'nowy panel',
+      old: 'stary panel'
+    },
     detailsDefault: 'Wybierz akcję i numer zamówienia',
+    detailsHeader: 'Szczegóły zamówienia nr',
+    email: 'Adres e-mail:',
     title: 'Manager zamówień Ad9BIS'
   },
   placeholders: {

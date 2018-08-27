@@ -8,6 +8,7 @@ const config = {
       { value: 3, text: 'Wyślij ponowny mail (NP)' },
       { value: 4, text: 'Wyślij ponowny mail (SP)' }
     ],
+    orderDetailHeaders: ['Miniatura', 'Numer ID', 'Nazwa', 'Na stanie', 'Drugi sklep', 'Zamówione', 'Opcje'],
     orders: [
       { value: 1, text: 'Nowy Panel' },
       { value: 2, text: 'Stary Panel' }
