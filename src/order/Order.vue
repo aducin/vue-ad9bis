@@ -1,11 +1,20 @@
 <template>
   <div class="hello">
     <account-header></account-header>
-    <account-detail></account-detail>
+    <transition
+      mode="out-in"
+      enter-active="enterTransition"
+      enter-active-class="animated flipInX"
+      leave-active-class="animated flipOutX"
+    >
+      <account-detail v-if="!loading"></account-detail>
+    </transition>
+    <busy v-if="loading" class="marginAuto"></busy>
   </div>
 </template>
 
 <script>
+import Circle from 'vue-loading-spinner/src/components/Circle4'
 import MessageService from '../services/messageService'
 import OrderService from '../services/orderService'
 import AccountDetail from './components/Detail.vue'
@@ -16,12 +25,14 @@ export default {
   data () {
     return {
       action: undefined,
+      loading: false,
       params: {}
     }
   },
   components: {
     'account-detail': AccountDetail,
-    'account-header': AccountHeader
+    'account-header': AccountHeader,
+    'busy': Circle
   },
   methods: {
     checkAction (dispatch) {
@@ -39,6 +50,7 @@ export default {
       this.params = this.$route.params
       this.params.action = 'order'
       this.params.token = this.$store.state.token
+      this.loading = true
       if (this.action === 'orderDetails') {
         promise = OrderService.getOrder(this.params)
       } else if (this.action === 'orderEven') {
@@ -61,6 +73,7 @@ export default {
           this.$store.dispatch('orderEmpty')
           MessageService.error.next(err.message)
         })
+        .finally(() => (this.loading = false))
     }
   },
   watch: {

@@ -6,52 +6,8 @@
           <p>{{ orderData.data }}</p>
       </div>
       <div v-if="orderData.action === 'order'">
-        <h3 class="left">{{ labels.order.detailsHeader }} {{ orderData.id }} ({{ orderData.data.reference }}) -
-          <span v-if="!orderData.db === 'new'"> {{ labels.order.db.new }}</span>
-          <span v-else> {{ labels.order.db.old }}</span>
-        </h3>
-        <div class="gridRow">
-          <div class="marginTop">
-            <div class="row"><label>{{ labels.order.customer }}</label></div>
-            <div class="row"><label>{{ labels.order.email }}</label></div>
-            <div class="row"><label>{{ labels.order.amount }}</label></div>
-          </div>
-          <div class="marginTop">
-            <div class="row">
-              <p><b>{{ orderData.customer.firstname }} {{ orderData.customer.lastname }}</b></p>
-            </div>
-            <div class="row">
-              <p><b>{{ orderData.customer.email }}</b></p>
-            </div>
-            <div class="row">
-              <p><b>{{ orderData.data.totalPaid }}{{ currency }}</b></p>
-            </div>
-          </div>
-        </div>
-        <div class="tableContent">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th v-for="item in headers" :key="item">{{ item }}</th>
-              </tr>
-            </thead>
-            <tbody class="table-striped">
-              <tr v-for="item in orderData.card" :key="item.productId">
-                <td><img :src="item.cover" height="70" width="70" class="imgBorder"></td>
-                <td class="paddingTop">{{ item.productId }}</td>
-                <td class="paddingTop">
-                  <a :href="link + item.productId + '-' + item.linkRewrite + '.html'" target="blank" class="pointer">{{ item.productName }}</a>
-                  </td>
-                <td class="paddingTop">{{ item.quantity.current }}</td>
-                <td class="paddingTop">{{ item.quantity.toUpdate }}</td>
-                <td class="paddingTop">{{ item.productQuantity }}</td>
-                <td class="paddingTopButton">
-                  <a :href="'/product/' + item.productId + '/edition'" target="blank" class="btn btn-primary pointer" >{{ labels.order.edition }}</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <order-customer v-bind:orderData="orderData"></order-customer>
+        <order-table v-bind:card="orderData.card"></order-table>
         <div class="container marginTop">
           <div class="row">
             <div class="col col-sm-6 col-md-4">
@@ -67,12 +23,8 @@
               </button>
             </div>
           </div>
-          <transition
-            mode="out-in"
-            enter-active="enterTransition"
-            enter-active-class="animated flipInX"
-            leave-active-class="animated flipOutX"
-          >
+          <transition mode="out-in" enter-active="enterTransition" enter-active-class="animated flipInX"
+            leave-active-class="animated flipOutX">
             <div v-if="showNumber" class="row marginTop">
               <div class="col col-sm-6 col-md-4">
                 <label>{{ labels.order.deliveryNumberFill }}</label>
@@ -98,20 +50,22 @@
 <script>
 import { required, minLength } from 'vuelidate/lib/validators'
 import { mapGetters } from 'vuex'
-import Config from '../../config'
+import Customer from './Customer'
 import Labels from '../../labels'
+import Table from './Table'
 
 export default {
   name: 'OrderDetail',
   data () {
     return {
-      currency: Config.currency,
-      headers: Config.options.orderDetailHeaders,
       labels: Labels,
-      link: Config.linkUrl + Config.linkSuffix,
       number: '(00)',
       showNumber: false
     }
+  },
+  components: {
+    'order-customer': Customer,
+    'order-table': Table
   },
   methods: {
     sendEmail (action) {
@@ -139,28 +93,7 @@ export default {
     text-align: center;
     width: 90%;
   }
-  .gridRow {
-    width: 80%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-  }
-  .imgBorder {
-    border: 1px solid #BDBBBB;
-    border-radius: 5px;
-  }
   .marginTop {
     margin-top: 20px;
-  }
-  .paddingTop {
-    padding-top: 34px;
-  }
-  .paddingTopButton {
-    padding-top: 29px;
-  }
-  .tableContent {
-    width: 100%;
-    margin: auto;
-    margin-top: 10px;
   }
 </style>
