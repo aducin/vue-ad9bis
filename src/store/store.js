@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 const defaultOrder = {
-  action: undefined,
+  action: null,
   card: {},
   customer: {},
-  db: undefined,
+  db: null,
   id: null,
   data: {}
 }
@@ -74,7 +74,9 @@ export const store = new Vuex.Store({
         data: {
           reference: payload.data.reference,
           totalPaid: payload.data.totalPaid,
+          totalPaidDiscount: payload.data.totalPaidDiscount || null,
           totalProduct: payload.data.totalProduct,
+          totalProductDiscount: payload.data.totalProductDiscount || null,
           totalShipment: payload.data.totalShipment
         },
         db: payload.db,
@@ -114,6 +116,9 @@ export const store = new Vuex.Store({
   },
   actions: {
     orderDetails: ({ commit }, payload) => {
+      commit('setOrderData', payload)
+    },
+    orderDiscount: ({ commit }, payload) => {
       commit('setOrderData', payload)
     },
     orderEmpty: ({ commit }) => {

@@ -38,6 +38,11 @@ export default new Router({
           component: Order
         },
         {
+          path: ':db/:id/discount',
+          name: 'orderDiscount',
+          component: Order
+        },
+        {
           path: ':db/:id/even',
           name: 'orderEven',
           component: Order

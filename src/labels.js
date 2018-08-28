@@ -15,7 +15,10 @@ const labels = {
   buttons: {
     clear: 'Usuń',
     close: 'Zamknij',
+    edition: 'Edycja',
     even: 'Wyrównaj ilości',
+    history: 'Historia',
+    orderReturn: 'Powrót do zamówienia',
     save: 'Zapisz'
   },
   customer: {
@@ -43,11 +46,12 @@ const labels = {
     },
     deliveryHide: 'Schowaj numer',
     deliveryNumber: 'Prześlij numer wysyłki',
-    deliveryNumberFill: 'Wprowadź numer wysyłki',
+    deliveryNumberFill: 'Wprowadź numer',
     detailsDefault: 'Wybierz akcję i numer zamówienia',
     detailsHeader: 'Szczegóły zamówienia nr',
     edition: 'Pełna edycja',
     email: 'Adres e-mail:',
+    evenHeader: 'Wyrównanie ilości produktów - zamówienie nr ',
     title: 'Manager zamówień Ad9BIS'
   },
   placeholders: {

@@ -24,7 +24,7 @@ export default {
   name: 'Order',
   data () {
     return {
-      action: undefined,
+      action: null,
       loading: false,
       params: {}
     }
@@ -53,14 +53,20 @@ export default {
       this.loading = true
       if (this.action === 'orderDetails') {
         promise = OrderService.getOrder(this.params)
+      } else if (this.action === 'orderDiscount') { 
+        this.params.discount = true
+        promise = OrderService.getDiscount(this.params)
       } else if (this.action === 'orderEven') {
         this.params.even = true
         promise = OrderService.setEven(this.params)
       }
       promise
         .then(response => {
+          console.log(response)
           if (response.data.success !== false) {
-            if (this.action === 'orderEven') {
+            if (this.action === 'orderDiscount') {
+              this.params.action = 'discount'
+            } else if (this.action === 'orderEven') {
               this.params.action = 'even'
             }
             this.params.data = response.data

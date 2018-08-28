@@ -1,7 +1,14 @@
 <template>
   <div>
     <postal-header @refresh="getData"></postal-header>
-    <postal-detail></postal-detail>
+    <transition
+      mode="out-in"
+      enter-active="enterTransition"
+      enter-active-class="animated flipInX"
+      leave-active-class="animated flipOutX"
+    >
+      <postal-detail></postal-detail>
+    </transition>
     <busy v-if="postalLoading" class="marginAuto"></busy>
   </div>
 </template>

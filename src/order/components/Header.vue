@@ -106,6 +106,9 @@ export default {
       this.selected.actionOption = null
     },
     searchAction () {
+      if (this.selected.actionOption === 2) {
+        this.$router.push({ name: 'orderDiscount', params: {db: 'old', id: this.selected.action} })
+      }
     },
     searchOrder () {
       let db = this.selected.orderOption === 1 ? 'new' : 'old'

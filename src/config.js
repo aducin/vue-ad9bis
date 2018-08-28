@@ -11,6 +11,16 @@ const config = {
       { value: 4, text: 'Wyślij ponowny mail (SP)' }
     ],
     orderDetailHeaders: ['Miniatura', 'Numer ID', 'Nazwa', 'Na stanie', 'Drugi sklep', 'Zamówione', 'Opcje'],
+    orderEvenHeaders: [
+      {id: 1, name: 'Miniatura'},
+      {id: 2, name: 'Numer ID'},
+      {id: 3, name: 'Nazwa'},
+      {id: 4, name: 'Ilość (zakup)'},
+      {id: 5, name: 'Ilość'},
+      {id: 6, name: 'Przed'},
+      {id: 7, name: 'Po'},
+      {id: 8, name: 'Akcje'}
+    ],
     orders: [
       { value: 1, text: 'Nowy Panel' },
       { value: 2, text: 'Stary Panel' }
