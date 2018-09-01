@@ -51,7 +51,7 @@
           <label>{{ labels.name }}</label>
         </div>
         <div class="row">
-          <input type="text" v-model="selected.name" class="form-control dataWidth" :placeholder="placeholders.name" />
+          <input type="text" @input="searchName" v-model="selected.name" class="form-control dataWidth" :placeholder="placeholders.name" />
         </div>
       </div>
       <div class="idSearch">
@@ -73,6 +73,7 @@
             :disabled="$v.$invalid"
             type="button"
             v-bind:class="{notAllowed: $v.$invalid}"
+            @click="basicId"
             class="btn btn-primary dataWidth"
           >{{ labels.search }}</button>
         </div>
@@ -84,6 +85,9 @@
 
 <script>
 import { required, numeric, minValue } from 'vuelidate/lib/validators'
+import MessageService from '../../services/messageService'
+import ProductService from '../../services/productService'
+import Config from '../../config'
 import Labels from '../../labels'
 
 import { mapGetters } from 'vuex'
@@ -93,12 +97,58 @@ export default {
   data () {
     return {
       labels: Labels.product,
+      nameSearch: false,
       placeholders: Labels.placeholders,
       selected: {
         category: null,
         id: null,
         manufactorer: null,
         name: ''
+      }
+    }
+  },
+  methods: {
+    basicId () {
+      ProductService.getBasicId(this.selected.id)
+        .then(response => {
+          if (response.data.success !== false) {
+            this.$store.dispatch('productLoading', true)
+            this.$store.dispatch('productData', { data: response.data, edition: 'basic' })
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => {
+          this.$store.dispatch('error')
+          MessageService.error.next(err.message)
+        })
+    },
+    searchName () {
+      if (!this.nameSearch) {
+        this.nameSearch = true
+        setTimeout(() => {
+          if (this.selected.name.length >= 3) {
+            let params = {
+              name: this.selected.name,
+              nameSearch: true,
+              category: this.selected.category || null,
+              manufacturer: this.selected.manufactorer || null
+            }
+            ProductService.getNameList(params)
+              .then(response => {
+                if (response.data.success) {
+                  this.$store.dispatch('productLoading', true)
+                  this.$store.dispatch('productName', { list: response.data, edition: 'nameSearch' })
+                } else {
+                  throw new Error(response.data.reason)
+                }
+              })
+              .catch(err => {
+                this.$store.dispatch('error')
+                MessageService.error.next(err.message)
+              })
+          }
+        }, Config.timer)
       }
     }
   },
@@ -114,10 +164,6 @@ export default {
         minValue: minValue(13)
       }
     }
-  },
-  updated () {
-    console.log(this.selected.id)
-    console.log(this.$v.selected.id.$error)
   }
 }
 </script>

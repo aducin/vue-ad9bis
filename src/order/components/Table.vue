@@ -3,7 +3,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <template v-if="data.action === 'order'">
+            <template v-if="data.action === 'discount' || data.action === 'mail' || data.action === 'order'">
               <th v-for="item in headersOrder" :key="item">{{ item }}</th>
             </template>
             <template v-if="data.action === 'even'">
@@ -13,10 +13,13 @@
                 <span v-if="item.id === 6 || item.id === 7">{{ item.name }} {{ even.second }}</span>
               </th>
             </template>
+            <template v-if="data.action === 'voucher'">
+              <th v-for="item in headersVoucher" :key="item">{{ item }}</th>
+            </template>
           </tr>
         </thead>
         <tbody class="table-striped">
-          <template v-if="data.action === 'order'">
+          <template v-if="data.action === 'discount' || data.action === 'mail' || data.action === 'order'">
             <tr v-for="item in data.card" :key="item.productId">
                 <td><img :src="item.cover" height="70" width="70" class="imgBorder"></td>
                 <td class="paddingTop">{{ item.productId }}</td>
@@ -49,6 +52,16 @@
               </td>
             </tr>
           </template>
+          <template v-if="data.action === 'voucher' && data.data.data">
+            <tr v-for="item in data.data.data" :key="item.productId" class="paddingTop10">
+              <td >{{ item.id }}</td>
+              <td>{{ item.reference }}</td>
+              <td>{{ item.totalProduct }}{{ currency }}</td>
+              <td>{{ item.totalShipping }}{{ currency }}</td>
+              <td>{{ item.dateAdd }}</td>
+              <td>{{ item.voucherNumber }}</td>
+            </tr>
+          </template>
         </tbody>
     </table>
     </div>
@@ -66,6 +79,7 @@ export default {
       currency: Config.currency,
       headersEven: Config.options.orderEvenHeaders,
       headersOrder: Config.options.orderDetailHeaders,
+      headersVoucher: Config.options.orderVoucherHeaders,
       labels: Labels,
       link: Config.linkUrl + Config.linkSuffix
     }
@@ -75,17 +89,14 @@ export default {
 </script>
 
 <style scoped>
-  .imgBorder {
-    border: 1px solid #BDBBBB;
-    border-radius: 5px;
-  }
   .tableContent {
     width: 100%;
-    margin: auto;
-    margin-top: 10px;
   }
   .paddingTop {
     padding-top: 34px;
+  }
+  .paddingTop10 {
+    padding-top: 10px;
   }
   .paddingTopButton {
     padding-top: 29px;

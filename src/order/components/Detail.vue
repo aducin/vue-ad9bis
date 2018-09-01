@@ -1,20 +1,16 @@
 <template>
   <div class="backgroundHeader">
     <div class="detailContener">
-      <p v-if="orderData.action === 'discount'">{{ orderData }}</p>
       <h3 v-if="!orderData.action" class="left">{{ labels.order.detailsDefault }}</h3>
       <order-customer v-bind:db="db" v-bind:id="this.$route.params.id" v-bind:orderData="orderData"></order-customer>
-      <order-table v-bind:data="orderData" v-bind:even="even"></order-table>
-      <div v-if="orderData.action === 'even'">
-        <order-buttons v-bind:action="orderData.action"></order-buttons>
-      </div>
-      <div v-if="orderData.action === 'order'">
-        <div class="container marginTop">
-          <order-buttons
-            v-bind:action="orderData.action"
-            @email="email"
-          ></order-buttons>
-        </div>
+      <order-table
+        v-if="orderData.action !== 'voucher' || (orderData.action === 'voucher' && orderData.data.data)"
+        v-bind:data="orderData"
+        v-bind:even="even"
+      ></order-table>
+      <order-summary v-if="orderData.action === 'discount'" v-bind:summary="orderData"></order-summary>
+      <div class="container marginTop">
+        <order-buttons v-bind:order="orderData" @email="email"></order-buttons>
       </div>
     </div>
   </div>
@@ -25,6 +21,7 @@ import { mapGetters } from 'vuex'
 import Buttons from './Buttons'
 import Customer from './Customer'
 import Labels from '../../labels'
+import Summary from './Summary'
 import Table from './Table'
 
 export default {
@@ -39,7 +36,8 @@ export default {
   components: {
     'order-buttons': Buttons,
     'order-customer': Customer,
-    'order-table': Table
+    'order-table': Table,
+    'order-summary': Summary
   },
   methods: {
     email (action) {

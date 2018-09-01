@@ -6,8 +6,11 @@
   border-radius: 10px;
 }
 .buttonBackground {
-    background: #007bff;
-  }
+  background: #007bff;
+}
+.buttons {
+  text-align: center;
+}
 .center {
   text-align: center;
 }
@@ -42,6 +45,10 @@
   padding-bottom: 20px;
   padding-top: 20px;
 }
+.imgBorder {
+    border: 1px solid #BDBBBB;
+    border-radius: 5px;
+  }
 .invalid {
   color: #dc3545;
 }
@@ -71,6 +78,12 @@
 .marginAuto {
   margin: auto;
 }
+.marginBottom20px {
+  margin-bottom: 20px;
+}
+.marginTop20px {
+  margin-top: 20px;
+}
 .notAllowed {
   cursor: not-allowed;
 }
@@ -87,6 +100,10 @@
   height: 40px;
   margin-left: 1px;
 }
+.tableContent {
+  margin: auto;
+  margin-top: 10px;
+}
 @media only screen and (min-width: 901px) {
   .displayNoneBig {
     display: none;
@@ -100,5 +117,18 @@
 @media only screen and (max-width: 719px) {
   .displayNoneSmall {
     display: none;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .buttons {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .buttons {
+    margin-right: 30px;
+    max-width: 180px;
+    width: 90%;
   }
 }

@@ -12,8 +12,7 @@
           v-model="selected.orderOption"
           :options="options.orders"
           @change="selected.actionOption = null"
-          class="mb-3 floatLeft smallerInput"
-        >
+          class="mb-3 floatLeft smallerInput">
           <template slot="first">
             <option :value="null" disabled>-- {{ labels.choose }} --</option>
           </template>
@@ -27,8 +26,7 @@
           v-model="selected.order"
           v-bind:class="{invalidBorder: $v.selected.order.$error}"
           class="form-control floatRight smallerInput"
-          :placeholder="placeholders.chooseNumber"
-        />
+          :placeholder="placeholders.chooseNumber" />
       </div>
       <div class="right absoluteButton first">
         <button
@@ -46,8 +44,7 @@
           v-model="selected.actionOption"
           :options="options.actions"
           @change="selected.orderOption = null"
-          class="mb-3 floatLeft smallerInput"
-        >
+          class="mb-3 floatLeft smallerInput">
           <template slot="first">
             <option :value="null" disabled>-- {{ labels.choose }} --</option>
           </template>
@@ -70,7 +67,7 @@
           :disabled="!selected.actionOption || selected.action < 1 || $v.selected.action.$error"
           type="button"
           class="btn btn-primary absoluteWidth"
-      >Wyszukaj</button>
+        >Wyszukaj</button>
       </div>
     </div>
   </div>
@@ -106,8 +103,12 @@ export default {
       this.selected.actionOption = null
     },
     searchAction () {
-      if (this.selected.actionOption === 2) {
-        this.$router.push({ name: 'orderDiscount', params: {db: 'old', id: this.selected.action} })
+      if (this.selected.actionOption === 1 || this.selected.actionOption === 2) {
+        let name = this.selected.actionOption === 1 ? 'orderVoucher' : 'orderDiscount'
+        this.$router.push({ name, params: {db: 'old', id: this.selected.action} })
+      } else if (this.selected.actionOption === 3 || this.selected.actionOption === 4) {
+        let db = this.selected.actionOption === 3 ? 'new' : 'old'
+        this.$router.push({ name: 'orderMail', params: {db, id: this.selected.action} })
       }
     },
     searchOrder () {
@@ -117,14 +118,8 @@ export default {
   },
   validations: {
     selected: {
-      action: {
-        required,
-        numeric
-      },
-      order: {
-        required,
-        numeric
-      }
+      action: { required, numeric },
+      order: { required, numeric }
     }
   }
 }

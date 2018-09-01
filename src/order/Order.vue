@@ -5,8 +5,7 @@
       mode="out-in"
       enter-active="enterTransition"
       enter-active-class="animated flipInX"
-      leave-active-class="animated flipOutX"
-    >
+      leave-active-class="animated flipOutX">
       <account-detail v-if="!loading"></account-detail>
     </transition>
     <busy v-if="loading" class="marginAuto"></busy>
@@ -51,26 +50,46 @@ export default {
       this.params.action = 'order'
       this.params.token = this.$store.state.token
       this.loading = true
-      if (this.action === 'orderDetails') {
+      if (this.action === 'orderDetails' || this.action === 'orderMail') {
         promise = OrderService.getOrder(this.params)
-      } else if (this.action === 'orderDiscount') { 
+      } else if (this.action === 'orderDiscount') {
         this.params.discount = true
         promise = OrderService.getDiscount(this.params)
       } else if (this.action === 'orderEven') {
         this.params.even = true
         promise = OrderService.setEven(this.params)
+      } else if (this.action === 'orderVoucher') {
+        this.params.basic = true
+        promise = OrderService.getOrder(this.params)
       }
       promise
         .then(response => {
-          console.log(response)
           if (response.data.success !== false) {
             if (this.action === 'orderDiscount') {
               this.params.action = 'discount'
             } else if (this.action === 'orderEven') {
               this.params.action = 'even'
+            } else if (this.action === 'orderMail') {
+              this.params.action = 'mail'
             }
-            this.params.data = response.data
-            this.$store.dispatch(this.action, this.params)
+            if (this.action !== 'orderVoucher') {
+              this.params.data = response.data
+              this.$store.dispatch(this.action, this.params)
+            } else {
+              delete (this.params.basic)
+              this.params.id = response.data.customer.id
+              this.params.vouchers = true
+              OrderService.getVoucher(this.params)
+                .then(response => {
+                  if (response.data.success !== false) {
+                    this.params.action = 'voucher'
+                    this.params.data = response.data
+                    this.$store.dispatch(this.action, this.params)
+                  } else {
+                    throw new Error(response.data.reason)
+                  }
+                })
+            }
           } else {
             throw new Error(response.data.reason)
           }
@@ -100,5 +119,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

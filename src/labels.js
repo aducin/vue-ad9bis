@@ -19,7 +19,9 @@ const labels = {
     even: 'Wyrównaj ilości',
     history: 'Historia',
     orderReturn: 'Powrót do zamówienia',
-    save: 'Zapisz'
+    save: 'Zapisz',
+    sendMail: 'Wyślij email',
+    showMail: 'Zobacz treść'
   },
   customer: {
     email: 'Adres e-mail',
@@ -52,7 +54,20 @@ const labels = {
     edition: 'Pełna edycja',
     email: 'Adres e-mail:',
     evenHeader: 'Wyrównanie ilości produktów - zamówienie nr ',
-    title: 'Manager zamówień Ad9BIS'
+    lastVoucher: 'Numer ostatniego kuponu:',
+    noVoucher: 'Brak zamówień powyżej 50zł',
+    summary: 'PODSUMOWANIE',
+    title: 'Manager zamówień Ad9BIS',
+    totalPaid: 'Suma produktów z wysyłką:',
+    totalPaidDiscount: 'Suma z wysyłką po rabacie:',
+    totalProduct: 'Suma wszystkich produktów:',
+    totalProductDiscount: 'Suma po rabacie:',
+    totalShipment: '',
+    voucherNumber: 'Numer ostatniego kuponu:',
+    voucherNumberAdd: 'Zwiększ numer',
+    voucherNumberShort: 'Numer kuponu:',
+    voucherNumberSubtract: 'Zmniejsz numer',
+    voucherTitle: 'Wyniki wyszukiwania kuponów dla Klienta:'
   },
   placeholders: {
     ammount: 'Podaj kwotę',
@@ -77,9 +92,14 @@ const labels = {
   product: {
     byId: 'Wyszukiwanie po ID:',
     byName: 'Wyszukiwanie po nazwie:',
+    checkDiscount: 'Sprawdź rabat!',
     choose: 'Proszę wybrać',
     chooseCategory: 'Wybierz kategorię',
     chooseManufactorer: 'Wybierz producenta',
+    editionBasic: 'Skrócona edycja',
+    editionFull: 'Pełna edycja',
+    history: 'Historia',
+    historyTitle: 'Historia zmian produktu ID: ',
     name: 'Nazwa produktu',
     search: 'Wyszukaj',
     title: 'Manager produktów Ad9BIS'

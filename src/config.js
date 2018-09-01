@@ -1,8 +1,10 @@
 const config = {
   currency: 'zł',
   defaultUrl: 'product',
+  imageUrl: 'http://modele-ad9bis.pl/img/p/',
   linkUrl: 'http://ad9bis.vot.pl/',
   linkSuffix: 'wagony-towarowe/',
+  mailSuffix: 'cms_spa/web/orders/',
   options: {
     actions: [
       { value: 1, text: 'Sprawdź kupon' },
@@ -21,10 +23,13 @@ const config = {
       {id: 7, name: 'Po'},
       {id: 8, name: 'Akcje'}
     ],
+    orderVoucherHeaders: ['Numer ID', 'Referencja', 'Produkty', 'Transport', 'Data', 'Numer kuponu'],
     orders: [
       { value: 1, text: 'Nowy Panel' },
       { value: 2, text: 'Stary Panel' }
     ],
+    productHistoryHeaders: ['Lp.', 'Data', 'Ilość', 'Miejsce', 'Sklep'],
+    productListHeaders: ['ID', 'Miniatura', 'Nazwa', 'Ilość', 'Cena SP', 'Cena NP', 'Akcje'],
     states: [
       { value: 1, text: 'Otwarty' },
       { value: 2, text: 'Zamknięty' },

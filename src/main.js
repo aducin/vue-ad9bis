@@ -11,9 +11,22 @@ import Polyfill from './polyfill.js'
 
 import { store } from './store/store'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faList, faListAlt, faMinusCircle, faNewspaper, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/common.css'
+
+library.add(faList)
+library.add(faListAlt)
+library.add(faMinusCircle)
+library.add(faNewspaper)
+library.add(faPlusCircle)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.config.productionTip = false
+
 require('vue2-animate/dist/vue2-animate.min.css')
 
 Promise.prototype.finally = Polyfill

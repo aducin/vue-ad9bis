@@ -11,6 +11,9 @@ class OrderService {
   getOrder (params) {
     return axios.get(Config.url, {params})
   }
+  getVoucher (params) {
+    return axios.get(Config.url, {params})
+  }
   setEven (params) {
     return axios.get(Config.url, {params})
   }

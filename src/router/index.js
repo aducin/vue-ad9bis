@@ -46,6 +46,16 @@ export default new Router({
           path: ':db/:id/even',
           name: 'orderEven',
           component: Order
+        },
+        {
+          path: ':db/:id/mail',
+          name: 'orderMail',
+          component: Order
+        },
+        {
+          path: ':db/:id/voucher',
+          name: 'orderVoucher',
+          component: Order
         }
       ]
     },
@@ -57,7 +67,19 @@ export default new Router({
     {
       path: '/product',
       name: 'product',
-      component: Product
+      component: Product,
+      children: [
+        {
+          path: ':id/edition',
+          name: 'productEdition',
+          component: Product
+        },
+        {
+          path: ':id/history',
+          name: 'productHistory',
+          component: Product
+        }
+      ]
     },
     {
       path: '*',
