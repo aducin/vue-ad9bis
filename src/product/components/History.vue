@@ -58,11 +58,6 @@ export default {
 </script>
 
 <style scoped>
-  .content {
-      width: 80%;
-      margin: auto;
-      padding-bottom: 20px;
-  }
   .row {
       padding-top: 10px;
   }

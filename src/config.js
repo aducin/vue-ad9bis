@@ -12,6 +12,10 @@ const config = {
       { value: 3, text: 'Wyślij ponowny mail (NP)' },
       { value: 4, text: 'Wyślij ponowny mail (SP)' }
     ],
+    active: [
+      { value: 1, text: 'Aktywny' },
+      { value: 0, text: 'Nieaktywny' }
+    ],
     orderDetailHeaders: ['Miniatura', 'Numer ID', 'Nazwa', 'Na stanie', 'Drugi sklep', 'Zamówione', 'Opcje'],
     orderEvenHeaders: [
       {id: 1, name: 'Miniatura'},

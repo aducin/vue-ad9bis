@@ -17,6 +17,11 @@
 .colorSuccess {
   color: #155724;
 }
+.content {
+  width: 80%;
+  margin: auto;
+  padding-bottom: 20px;
+}
 .dataWidth {
   height: 32px;
 }
@@ -130,5 +135,8 @@
     margin-right: 30px;
     max-width: 180px;
     width: 90%;
+  }
+  .labelMargin {
+    margin-top: 5px;
   }
 }

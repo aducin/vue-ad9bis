@@ -72,11 +72,19 @@ const labels = {
   placeholders: {
     ammount: 'Podaj kwotę',
     chooseNumber: 'Wybierz numer',
+    description: 'Podaj opis',
+    descriptionShort: 'Podaj krótki opis',
     email: 'Wpisz adres',
+    link: 'Podaj link',
     login: 'Podaj login',
+    metaDescription: 'Podaj meta-opis',
+    metaTitle: 'Podaj meta-tytuł',
     name: 'Podaj nazwę',
     number: 'Podaj numer',
-    password: 'Podaj hasło'
+    password: 'Podaj hasło',
+    price: 'Podaj cenę',
+    quantity: 'Podaj ilość',
+    tags: 'Podaj tagi (po przecinku)'
   },
   postal: {
     add: 'Dodaj kwotę',
@@ -96,11 +104,32 @@ const labels = {
     choose: 'Proszę wybrać',
     chooseCategory: 'Wybierz kategorię',
     chooseManufactorer: 'Wybierz producenta',
+    discount: ' - rabat wynosi: ',
+    edition: {
+      active: 'Aktywność:',
+      description: 'Pełny opis:',
+      descriptionShort: 'Krótki opis:',
+      manufactorer: 'Producent:',
+      metaDescription: 'Meta-opis produktu:',
+      metaTitle: 'Meta-tytuł produktu:',
+      name: 'Nazwa:',
+      priceNew: 'Cena (NP):',
+      priceOld: 'Cena (SP):',
+      quantity: 'Ilość:',
+      tags: 'Tagi produktu:',
+      url: 'Link:'
+    },
     editionBasic: 'Skrócona edycja',
     editionFull: 'Pełna edycja',
+    editionTitle: 'Pełna edycja produktu ID: ',
     history: 'Historia',
     historyTitle: 'Historia zmian produktu ID: ',
     name: 'Nazwa produktu',
+    otherManufactorer: 'Brak (inny producent)',
+    priceRealNew: 'Uwaga! Realna cena w nowym panelu to:',
+    priceRealOld: 'Uwaga! Realna cena w starym panelu to:',
+    quantityEqual: 'Ta sama ilość w obu panelach',
+    quantityNotEqual: 'UWAGA - ilość w nowym panelu to: ',
     search: 'Wyszukaj',
     title: 'Manager produktów Ad9BIS'
   }
