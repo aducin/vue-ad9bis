@@ -26,12 +26,14 @@
 </template>
 
 <script>
+import Config from '../../../config'
 import Labels from '../../../labels'
 
 export default {
   name: 'PriceEdition',
   data () {
     return {
+      config: Config,
       labels: Labels.product,
       placeholders: Labels.placeholders
     }

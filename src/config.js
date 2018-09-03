@@ -16,6 +16,11 @@ const config = {
       { value: 1, text: 'Aktywny' },
       { value: 0, text: 'Nieaktywny' }
     ],
+    condition: [
+      { value: 'new', text: 'Nowy' },
+      { value: 'used', text: 'Używany' },
+      { value: 'renewed', text: 'Odnowiony' }
+    ],
     orderDetailHeaders: ['Miniatura', 'Numer ID', 'Nazwa', 'Na stanie', 'Drugi sklep', 'Zamówione', 'Opcje'],
     orderEvenHeaders: [
       {id: 1, name: 'Miniatura'},

@@ -27,6 +27,9 @@ class ProductService {
   getNameList (params) {
     return axios.get(url, {params})
   }
+  setUpdate (data) {
+    return axios.post(url, {data})
+  }
 }
 
 const serviceInstance = new ProductService()

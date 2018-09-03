@@ -95,6 +95,12 @@
 .opacity5 {
   opacity: 0.5
 }
+.outerContent {
+  background: #F7F9F9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
 .pointer {
   cursor: pointer;
 }
