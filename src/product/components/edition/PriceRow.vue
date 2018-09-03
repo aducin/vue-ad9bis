@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="innerContent inputRow marginLeft row">
+    <div class="innerContent inputRow row">
       <div class="col col-12 col-md-7 col-lg-8 left">
         <label class="labelMargin">{{ labels.edition[id] }}</label>
       </div>
@@ -51,23 +51,6 @@ export default {
 label {
   display: block;
   text-align: left;
-}
-@media only screen and (min-width: 767px) {
-  .innerContent {
-    width: 80%;
-  }
-  .marginLeft {
-      margin-left: 10%;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .innerContent {
-    width: 100%;
-  }
-  .inputRow {
-    height: 70px;
-    padding-bottom: 20px;
-  }
 }
 @media only screen and (min-width: 610px) {
   .alertHeight {

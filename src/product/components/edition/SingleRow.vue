@@ -85,29 +85,16 @@ label {
   display: block;
   text-align: left;
 }
-.innerContent {
-  margin: auto;
-}
 .textAreaHeight {
   min-height: 112px;
 }
 @media only screen and (min-width: 767px) {
-  .innerContent {
-    width: 80%;
-  }
   .inputQuantity {
     height: 50px;
   }
 }
 @media only screen and (max-width: 767px) {
-  .innerContent {
-    width: 100%;
-  }
   .inputQuantity {
-    height: 70px;
-    padding-bottom: 20px;
-  }
-  .inputRow {
     height: 70px;
     padding-bottom: 20px;
   }

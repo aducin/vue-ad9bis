@@ -21,7 +21,7 @@ const defaultProduct = {
   type: null
 }
 const modifyProduct = (obj, payload) => {
-  obj.data = payload.edition === 'edition' ? payload.data : {}
+  obj.data = payload.edition === 'edition' || payload.edition === 'basic' ? payload.data : {}
   obj.type = payload.edition
   obj.history = payload.edition === 'history' ? payload.list : []
   obj.loading = false

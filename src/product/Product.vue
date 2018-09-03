@@ -10,6 +10,7 @@
       <product-edition v-if="productData.type === 'edition'" v-bind:data="productData.data"></product-edition>
       <product-history v-if="productData.type === 'history'" v-bind:data="productData.history"></product-history>
     </transition>
+    <p>{{ productData }}</p>
     <busy v-if="productLoading" class="marginAuto"></busy>
   </div>
 </template>

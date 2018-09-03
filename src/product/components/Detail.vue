@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import MessageService from '../../services/messageService'
+import ProductService from '../../services/productService'
 import Config from '../../config'
 import Labels from '../../labels'
 
@@ -78,7 +80,19 @@ export default {
   },
   methods: {
     setBasic (id) {
-      console.log('inside basic: ', id)
+      ProductService.getBasicId(id)
+        .then(response => {
+          if (response.data.success !== false) {
+            this.$store.dispatch('productLoading', true)
+            this.$store.dispatch('productData', { data: response.data, edition: 'basic' })
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => {
+          this.$store.dispatch('error')
+          MessageService.error.next(err.message)
+        })
     },
     setFull (id) {
       this.$router.push({ name: 'productEdition', params: {id} })
