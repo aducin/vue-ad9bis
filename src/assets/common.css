@@ -32,6 +32,9 @@
   padding-bottom: 10px;
   width: 80%;
 }
+.displayedNone {
+  display: none;
+}
 .floatLeft {
   float: left;
 }

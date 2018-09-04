@@ -59,19 +59,17 @@
           <h4>{{ labels.byId }}</h4>
         </div>
         <div class="row">
-          <input
-            type="text"
+          <input type="text"
             @input="$v.selected.id.$touch()"
             v-model="selected.id"
             v-bind:class="{invalidBorder: $v.selected.id.$error}"
-            class="form-control dataWidth"
+            class="form-control center dataWidth"
             :placeholder="placeholders.chooseNumber"
           />
         </div>
         <div class="row">
-          <button
+          <button type="button"
             :disabled="$v.$invalid"
-            type="button"
             v-bind:class="{notAllowed: $v.$invalid}"
             @click="basicId"
             class="btn btn-primary dataWidth"
@@ -99,12 +97,7 @@ export default {
       labels: Labels.product,
       nameSearch: false,
       placeholders: Labels.placeholders,
-      selected: {
-        category: null,
-        id: null,
-        manufactorer: null,
-        name: ''
-      }
+      selected: { category: null, id: null, manufactorer: null, name: '' }
     }
   },
   methods: {
@@ -138,7 +131,7 @@ export default {
               .then(response => {
                 if (response.data.success) {
                   this.$store.dispatch('productLoading', true)
-                  this.$store.dispatch('productName', { list: response.data, edition: 'nameSearch' })
+                  this.$store.dispatch('productName', { list: response.data.list, edition: 'nameSearch' })
                 } else {
                   throw new Error(response.data.reason)
                 }
@@ -158,12 +151,11 @@ export default {
   ]),
   validations: {
     selected: {
-      id: {
-        required,
-        numeric,
-        minValue: minValue(13)
-      }
+      id: { required, numeric, minValue: minValue(13) }
     }
+  },
+  created () {
+    ProductService.nameSearch.subscribe(() => this.searchName())
   }
 }
 </script>
@@ -194,7 +186,7 @@ export default {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-areas:
-      "labels name";
+      "labels n51ame";
     }
   }
   @media only screen and (min-width: 901px) {

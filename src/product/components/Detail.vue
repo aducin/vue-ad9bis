@@ -7,7 +7,7 @@
         </tr>
       </thead>
       <tbody class="table-striped">
-        <tr v-for="item in data.list" :key="item.id">
+        <tr v-for="item in data" :key="item.id">
           <td class="paddingTop">{{ item.id }}</td>
           <td><img :src="imageUrl + item.id + '-' + item.image + '-thickbox.jpg'" height="70" width="70" class="imgBorder"></td>
           <td class="paddingTop">
@@ -84,7 +84,7 @@ export default {
         .then(response => {
           if (response.data.success !== false) {
             this.$store.dispatch('productLoading', true)
-            this.$store.dispatch('productData', { data: response.data, edition: 'basic' })
+            this.$store.dispatch('productData', { data: response.data, edition: 'basic', list: this.data })
           } else {
             throw new Error(response.data.reason)
           }

@@ -1,26 +1,40 @@
 <template>
   <div>
     <product-header></product-header>
-    <transition
+    <transition-group
       mode="out-in"
       enter-active="enterTransition"
       enter-active-class="animated flipInX"
       leave-active-class="animated flipOutX">
-      <product-detail v-if="productData.type === 'nameSearch'" v-bind:data="productData.list"></product-detail>
-      <product-edition v-if="productData.type === 'edition'" v-bind:data="productData.data"></product-edition>
-      <product-history v-if="productData.type === 'history'" v-bind:data="productData.history"></product-history>
-    </transition>
-    <p>{{ productData }}</p>
+      <product-detail key="1"
+        v-if="(productData.type === 'nameSearch' || productData.type === 'basic') && productData.list"
+        v-bind:data="productData.list"
+      ></product-detail>
+      <product-edition key="2"
+        v-if="action === 'productEdition'"
+        v-bind:data="productData.data"
+      ></product-edition>
+      <product-history v-if="action === 'productHistory'" key="3"></product-history>
+      <product-modal key="4"
+        v-bind:data="productData.data"
+        v-bind:list="productData.list"
+        @closeModal="clear"
+      ></product-modal>
+    </transition-group>
+    <modified v-if="action === 'additional'"></modified>
     <busy v-if="productLoading" class="marginAuto"></busy>
+    <b-btn v-b-modal.basicModal ref="openModal" class="displayedNone">Open modal</b-btn>
   </div>
 </template>
 
 <script>
 import Circle from 'vue-loading-spinner/src/components/Circle4'
+import Modified from './components/Modified.vue'
 import ProductDetail from './components/Detail.vue'
 import ProductEdition from './components/Edition.vue'
 import ProductHeader from './components/Header.vue'
 import ProductHistory from './components/History.vue'
+import ProductModal from './components/Modal.vue'
 import ProductService from '../services/productService'
 
 import { mapGetters } from 'vuex'
@@ -39,41 +53,36 @@ export default {
     'product-edition': ProductEdition,
     'product-header': ProductHeader,
     'product-history': ProductHistory,
+    'product-modal': ProductModal,
+    'modified': Modified,
     'busy': Circle
   },
   methods: {
     checkAction () {
-      let promise
       if (this.$router.currentRoute.params.id) {
         if (this.$router.currentRoute.name !== this.action || this.$router.currentRoute.params.id !== this.id) {
           this.action = this.$router.currentRoute.name
           this.id = this.$router.currentRoute.params.id
           this.$store.dispatch('productLoading')
-          if (this.action === 'productEdition') {
-            promise = ProductService.getEdition({ product: this.id })
-          } else if (this.action === 'productHistory') {
-            promise = ProductService.getHistory({ action: 'history', id: this.id })
-          }
-          promise
-            .then(response => {
-              if (response.data.success) {
-                if (this.action === 'productEdition') {
-                  this.$store.dispatch('productData', { edition: 'edition', data: response.data })
-                } else if (this.action === 'productHistory') {
-                  this.$store.dispatch('productHistory', { edition: 'history', list: response.data.list })
-                }
-              } else {
-                throw new Error(response.data.reason)
-              }
-            })
-            .catch(err => this.$store.commit('setError', err.message))
         }
       } else {
-        if (this.action) {
-          this.action = null
-          this.id = null
-          this.$store.commit('clearProduct')
-        }
+        this.action !== 'additional' ? this.clear() : this.action = 'additional'
+      }
+    },
+    checkModal (state) {
+      if (state.product.type === 'basic' && this.action !== state.product.type) {
+        this.action = state.product.type
+        this.$refs.openModal.click()
+        // this.$refs.basicModal.show()
+      }
+    },
+    clear () {
+      this.id = null
+      this.action = this.productData.list && this.productData.list.length > 0 ? 'nameSearch' : 'additional'
+      if (this.productData.list && this.productData.list.length > 0) {
+        this.$store.dispatch('productName', { list: this.productData.list, edition: 'nameSearch' })
+      } else {
+        this.$store.commit('clearProduct')
       }
     },
     getLists () {
@@ -100,10 +109,12 @@ export default {
       })
     }
   },
-  computed: mapGetters([
-    'productData',
-    'productLoading'
-  ]),
+  computed: {
+    ...mapGetters([
+      'productData',
+      'productLoading'
+    ])
+  },
   watch: {
     '$route' () {
       this.checkAction()
@@ -114,9 +125,12 @@ export default {
       this.getLists()
     }
     this.checkAction()
+    this.$store.watch(
+      (state) => this.checkModal(state)
+    )
   },
   destroyed () {
-    this.$store.commit('clearProduct')
+    this.clear()
   }
 }
 </script>

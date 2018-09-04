@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     setTagString (tagArray) {
-      if (tagArray.length > 0) {
+      if (tagArray && tagArray.length > 0) {
         tagArray.forEach(el => {
           this.tagString += el.name + ', '
         })

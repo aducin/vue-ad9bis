@@ -25,7 +25,7 @@ const modifyProduct = (obj, payload) => {
   obj.type = payload.edition
   obj.history = payload.edition === 'history' ? payload.list : []
   obj.loading = false
-  obj.nameList = payload.edition === 'nameSearch' ? payload.list : []
+  obj.nameList = payload.edition === 'nameSearch' || payload.edition === 'basic' ? payload.list : []
   return obj
 }
 
@@ -34,6 +34,10 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     error: false,
+    modified: {
+      empty: false,
+      list: []
+    },
     logged: false,
     order: {...defaultOrder},
     postal: {
@@ -47,6 +51,9 @@ export const store = new Vuex.Store({
   getters: {
     apiToken: state => {
       return state.token
+    },
+    modifiedData: state => {
+      return state.modified
     },
     orderData: state => {
       return state.order
@@ -94,6 +101,12 @@ export const store = new Vuex.Store({
     setLoggedOut: (state) => {
       state.logged = false
       state.token = undefined
+    },
+    setModified: (state, payload) => {
+      state.modified = {
+        empty: payload.empty,
+        list: payload.list
+      }
     },
     setOrderData: (state, payload) => {
       state.order = {
@@ -167,6 +180,7 @@ export const store = new Vuex.Store({
   actions: {
     clearProduct: ({ commit }, payload) => commit('clearProduct'),
     error: ({ commit }, payload) => commit('setError', payload),
+    modified: ({ commit }, payload) => commit('setModified', payload),
     orderDetails: ({ commit }, payload) => commit('setOrderData', payload),
     orderDiscount: ({ commit }, payload) => commit('setOrderData', payload),
     orderEmpty: ({ commit }) => commit('setOrderEmpty'),

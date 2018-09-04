@@ -21,6 +21,7 @@ const config = {
       { value: 'used', text: 'Używany' },
       { value: 'renewed', text: 'Odnowiony' }
     ],
+    modifiedHeaders: ['ID', 'Nazwa', 'Data', 'Akcja'],
     orderDetailHeaders: ['Miniatura', 'Numer ID', 'Nazwa', 'Na stanie', 'Drugi sklep', 'Zamówione', 'Opcje'],
     orderEvenHeaders: [
       {id: 1, name: 'Miniatura'},

@@ -28,7 +28,6 @@
 <script>
 import Config from '../../../config'
 import Labels from '../../../labels'
-
 export default {
   name: 'PriceEdition',
   data () {

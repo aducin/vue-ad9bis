@@ -1,6 +1,6 @@
 <template>
   <div class="outerContent">
-    <div class="content">
+    <div v-if="data.id" class="content">
       <a :href="config.linkUrl + $route.params.id + '-' + data.url + '.html'" target="blank" class="pointer">
         <h3 class="left">{{ labels.editionTitle }}{{ $route.params.id }}</h3>
       </a>
@@ -70,6 +70,17 @@ export default {
     'toggled-rows': ToggledRow
   },
   methods: {
+    getData () {
+      ProductService.getEdition({ product: this.$route.params.id })
+        .then(response => {
+          if (response.data.success) {
+            this.$store.dispatch('productData', { edition: 'edition', data: response.data })
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => this.$store.commit('setError', err.message))
+    },
     save () {
       let curObj = { ...this.data, deletePhoto: this.photos, modified: this.modified }
       window.scrollTo(0, 0)
@@ -99,8 +110,12 @@ export default {
   },
   props: ['data'],
   computed: mapGetters([
-    'productCategories'
-  ])
+    'productCategories',
+    'productData'
+  ]),
+  created () {
+    this.getData()
+  }
 }
 </script>
 
