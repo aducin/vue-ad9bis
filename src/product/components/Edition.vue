@@ -113,6 +113,11 @@ export default {
     'productCategories',
     'productData'
   ]),
+  watch: {
+    '$route' () {
+      this.getData()
+    }
+  },
   created () {
     this.getData()
   }

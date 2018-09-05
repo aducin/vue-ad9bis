@@ -28,9 +28,6 @@ export default {
     'postal-header': PostalHeader,
     'busy': Circle
   },
-  computed: mapGetters([
-    'postalLoading'
-  ]),
   methods: {
     getData () {
       this.$store.commit('setPostalLoading', true)
@@ -51,6 +48,9 @@ export default {
         })
     }
   },
+  computed: mapGetters([
+    'postalLoading'
+  ]),
   created () {
     this.getData()
   }

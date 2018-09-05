@@ -64,20 +64,25 @@ export default {
   methods: {
     getData () {
       ProductService.getHistory({ action: 'history', id: this.$route.params.id })
-      .then(response => {
-        if (response.data.success) {
-          this.$store.dispatch('productHistory', { edition: 'history', list: response.data.list })
-        } else {
-          throw new Error(response.data.reason)
-        }
-      })
-      .catch(err => this.$store.commit('setError', err.message))
+        .then(response => {
+          if (response.data.success) {
+            this.$store.dispatch('productHistory', { edition: 'history', list: response.data.list })
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => this.$store.commit('setError', err.message))
     }
   },
   computed: {
     ...mapGetters([
       'productData'
     ])
+  },
+  watch: {
+    '$route' () {
+      this.getData()
+    }
   },
   created () {
     this.getData()

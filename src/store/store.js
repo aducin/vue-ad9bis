@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+const defaultAccount = {
+  amount: null,
+  automatic: false,
+  list: [],
+  maxAmount: null
+}
 const defaultOrder = {
   action: null,
   card: {},
@@ -33,6 +39,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+    account: {...defaultAccount},
     error: false,
     modified: {
       empty: false,
@@ -49,6 +56,9 @@ export const store = new Vuex.Store({
     token: undefined
   },
   getters: {
+    accounts: state => {
+      return state.account
+    },
     apiToken: state => {
       return state.token
     },
@@ -94,6 +104,9 @@ export const store = new Vuex.Store({
     },
     removeError: (state) => {
       state.error = false
+    },
+    setAccount: (state, payload) => {
+      state.account = payload
     },
     setError: (state, payload) => {
       state.error = payload
@@ -178,6 +191,7 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    accountData: ({ commit }, payload) => commit('setAccount', payload),
     clearProduct: ({ commit }, payload) => commit('clearProduct'),
     error: ({ commit }, payload) => commit('setError', payload),
     modified: ({ commit }, payload) => commit('setModified', payload),

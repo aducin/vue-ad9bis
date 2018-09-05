@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="buttons displayNoneMedium">
-        <div class="row smallMarginTop">
+        <div class="rightTitle row smallMarginTop">
           <h4>{{ labels.management }}</h4>
         </div>
         <div class="row">
@@ -144,7 +144,7 @@ export default {
     }
     .headerContainer {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 2fr 2fr;
       grid-template-areas:
       "labels data buttons";
     }
@@ -153,6 +153,9 @@ export default {
     }
     .labels {
       grid-area: labels;
+    }
+    .rightTitle {
+      width: 110%;
     }
   }
   @media only screen and (min-width: 720px) {
