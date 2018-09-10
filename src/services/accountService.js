@@ -1,13 +1,16 @@
 import axios from 'axios'
 
+import { Subject } from 'rxjs'
+
 import Config from '../config'
 
 class AccountService {
+  edition = new Subject()
   // constructor () {}
 
-  getAccounts (token) {
+  getAccounts (token, params) {
     let url = Config.url + '?accounts=true&token=' + token
-    return axios.get(url)
+    return axios.get(url, {params})
   }
 }
 

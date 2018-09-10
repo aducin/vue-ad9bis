@@ -12,17 +12,14 @@ import Polyfill from './polyfill.js'
 import { store } from './store/store'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faList, faListAlt, faMinusCircle, faNewspaper, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleDown, faArrowCircleRight, faArrowCircleUp, faList, faListAlt, faMinusCircle, faNewspaper, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/common.css'
 
-library.add(faList)
-library.add(faListAlt)
-library.add(faMinusCircle)
-library.add(faNewspaper)
-library.add(faPlusCircle)
+library.add([faArrowCircleDown, faArrowCircleRight, faArrowCircleUp, faList, faListAlt, faMinusCircle,
+  faNewspaper, faPlusCircle])
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false

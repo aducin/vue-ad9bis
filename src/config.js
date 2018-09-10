@@ -6,6 +6,23 @@ const config = {
   linkSuffix: 'wagony-towarowe/',
   mailSuffix: 'cms_spa/web/orders/',
   options: {
+    accountHeaders: [
+      { name: 'id', value: 'Lp.' },
+      { name: 'recipient', value: 'Klient' },
+      { name: 'address', value: 'Numer nadania' },
+      { name: 'amountFloat', value: 'Kwota' },
+      { name: 'type', value: 'Rodzaj' },
+      { name: 'receipt', value: 'Nr paragonu' },
+      { name: 'receiptTime', value: 'Data paragonu' },
+      { name: 'cashTime', value: 'Data wpłaty' },
+      { name: 'locs', value: 'Loks' },
+      { name: 'coach', value: 'Wagony' },
+      { name: 'element', value: 'Elementy' },
+      { name: 'accessories', value: 'Części' },
+      { name: 'book', value: 'Książki' },
+      { name: 'car', value: 'Auta' },
+      { name: 'remarks', value: 'Uwagi' }
+    ],
     actions: [
       { value: 1, text: 'Sprawdź kupon' },
       { value: 2, text: 'Oblicz 15% rabat' },

@@ -8,44 +8,33 @@
         <div class="row">
           <h4 class="absolute">{{ labels.advanced }}</h4>
         </div>
-        <div class="row">
-          <label>{{ labels.type }}</label>
-        </div>
-        <div class="row displayNoneSmall">
-          <label>{{ labels.state }}</label>
-        </div>
-        <div class="row displayNoneSmall">
-          <label>{{ labels.dateFrom }}</label>
-        </div>
-        <div class="row displayNoneSmall">
-          <label>{{ labels.dateTo }}</label>
-        </div>
+        <div class="row"><label>{{ labels.type }}</label></div>
+        <div class="row displayNoneSmall"><label>{{ labels.state }}</label></div>
+        <div class="row displayNoneSmall"><label>{{ labels.dateFrom }}</label></div>
+        <div class="row displayNoneSmall"><label>{{ labels.dateTo }}</label></div>
       </div>
       <div class="data">
         <div class="row displayNoneSmall"></div>
         <div class="row">
-          <b-form-select v-model="selected.type" :options="options.types" class="mb-3 dataWidth" >
+          <b-form-select v-model="selected.type" @input="setDetails" :options="options.types" class="mb-3 dataWidth" >
             <template slot="first">
               <option :value="null" disabled>-- {{ labels.choose }} --</option>
             </template>
           </b-form-select>
         </div>
-        <div class="row displayNoneBig displayNoneMedium">
-          <label>{{ labels.dateFrom }}</label>
-        </div>
+        <div class="row displayNoneBig displayNoneMedium"><label>{{ labels.dateFrom }}</label></div>
         <div class="row">
-          <b-form-select v-model="selected.state" :options="options.states" class="mb-3 dataWidth" >
+          <b-form-select v-model="selected.state" @input="setDetails" :options="options.states" class="mb-3 dataWidth" >
             <template slot="first">
               <option :value="null" disabled>-- {{ labels.choose }} --</option>
             </template>
           </b-form-select>
         </div>
-        <div class="row displayNoneBig displayNoneMedium">
-          <label>{{ labels.dateTo }}</label>
-        </div>
+        <div class="row displayNoneBig displayNoneMedium"><label>{{ labels.dateTo }}</label></div>
         <div class="row">
           <date-picker
             v-model="selected.dateFrom"
+            @change="setDetails"
             :editable="false"
             :first-day-of-week="1"
             :lang="settings"
@@ -57,12 +46,13 @@
         </div>
         <div class="row">
           <date-picker
-          v-model="selected.dateTo"
-          :editable="false"
-          :first-day-of-week="1"
-          :lang="settings"
-          class="dataWidth"
-        ></date-picker>
+            v-model="selected.dateTo"
+            @change="setDetails"
+            :editable="false"
+            :first-day-of-week="1"
+            :lang="settings"
+            class="dataWidth"
+          ></date-picker>
         </div>
       </div>
       <div class="buttons displayNoneMedium">
@@ -73,10 +63,10 @@
           <button type="button" class="btn btn-primary dataWidth">{{ labels.add }}</button>
         </div>
         <div class="row">
-          <button type="button" class="btn btn-primary dataWidth">{{ labels.edit }}</button>
+          <button type="button" :disabled="editionDisabled" class="btn btn-primary dataWidth">{{ labels.edit }}</button>
         </div>
         <div class="row">
-          <button type="button" class="btn btn-primary dataWidth">{{ labels.createXml }}</button>
+          <button type="button" :disabled="!selected.dateFrom || !selected.dateTo" class="btn btn-primary dataWidth">{{ labels.createXml }}</button>
         </div>
       </div>
       <div class="displayNoneBig displayNoneSmall">
@@ -94,6 +84,7 @@
 </template>
 
 <script>
+import AccountService from '../../services/accountService'
 import DatePicker from 'vue2-datepicker'
 import dateSettings from '../../datepicker.js'
 import Config from '../../config'
@@ -104,6 +95,7 @@ export default {
   components: { DatePicker },
   data () {
     return {
+      editionDisabled: true,
       labels: Labels.account,
       options: Config.options,
       selected: {
@@ -114,6 +106,32 @@ export default {
       },
       settings: dateSettings
     }
+  },
+  methods: {
+    setDate (obj) {
+      let year = obj.getFullYear()
+      let month = obj.getMonth() + 1
+      let day = obj.getDate()
+      month = month < 10 ? '0' + month : month
+      day = day < 10 ? '0' + day : day
+      return year + '-' + month + '-' + day
+    },
+    setDetails () {
+      let curSelected = {...this.selected}
+      for (let key in curSelected) {
+        if (!curSelected[key] || curSelected[key] === '') {
+          delete (curSelected[key])
+        } else if (typeof (curSelected[key]) === 'object') {
+          curSelected[key] = this.setDate(curSelected[key])
+        }
+      }
+      this.$emit('setData', curSelected)
+    }
+  },
+  created () {
+    AccountService.edition.subscribe(bool => {
+      this.editionDisabled = bool
+    })
   }
 }
 </script>
