@@ -60,13 +60,17 @@
           <h4>{{ labels.management }}</h4>
         </div>
         <div class="row">
-          <button type="button" class="btn btn-primary dataWidth">{{ labels.add }}</button>
+          <b-btn v-b-modal.accountModal @click="open('add')" class="btn btn-primary dataWidth">{{ labels.add }}</b-btn>
         </div>
         <div class="row">
-          <button type="button" :disabled="editionDisabled" class="btn btn-primary dataWidth">{{ labels.edit }}</button>
+          <b-btn v-b-modal.accountModal :disabled="editionDisabled" @click="open('edit')" class="btn btn-primary dataWidth">{{ labels.edit }}</b-btn>
         </div>
         <div class="row">
-          <button type="button" :disabled="!selected.dateFrom || !selected.dateTo" class="btn btn-primary dataWidth">{{ labels.createXml }}</button>
+          <button
+            type="button"
+            :disabled="!selected.dateFrom || !selected.dateTo"
+            class="btn btn-primary dataWidth"
+          >{{ labels.createXml }}</button>
         </div>
       </div>
       <div class="displayNoneBig displayNoneSmall">
@@ -80,41 +84,32 @@
         </div>
       </div>
     </div>
+    <account-modal v-bind:action="action" v-bind:data="modalData"></account-modal>
   </div>
 </template>
 
 <script>
+import { headerState } from '../../states/accountHeaderState'
+import AccountModal from './Modal.vue'
 import AccountService from '../../services/accountService'
 import DatePicker from 'vue2-datepicker'
-import dateSettings from '../../datepicker.js'
-import Config from '../../config'
-import Labels from '../../labels'
+import { setDate } from '../../functions/setDate'
 
 export default {
   name: 'AccountHeader',
-  components: { DatePicker },
+  components: {
+    'account-modal': AccountModal,
+    DatePicker
+  },
   data () {
-    return {
-      editionDisabled: true,
-      labels: Labels.account,
-      options: Config.options,
-      selected: {
-        dateFrom: '',
-        dateTo: '',
-        state: null,
-        type: null
-      },
-      settings: dateSettings
-    }
+    return headerState
   },
   methods: {
-    setDate (obj) {
-      let year = obj.getFullYear()
-      let month = obj.getMonth() + 1
-      let day = obj.getDate()
-      month = month < 10 ? '0' + month : month
-      day = day < 10 ? '0' + day : day
-      return year + '-' + month + '-' + day
+    open (action) {
+      this.action = action
+      if (action === 'edit') {
+        this.modalData = {...AccountService.activeRow}
+      }
     },
     setDetails () {
       let curSelected = {...this.selected}
@@ -122,7 +117,7 @@ export default {
         if (!curSelected[key] || curSelected[key] === '') {
           delete (curSelected[key])
         } else if (typeof (curSelected[key]) === 'object') {
-          curSelected[key] = this.setDate(curSelected[key])
+          curSelected[key] = setDate(curSelected[key])
         }
       }
       this.$emit('setData', curSelected)

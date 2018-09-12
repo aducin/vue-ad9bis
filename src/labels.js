@@ -1,10 +1,11 @@
 const labels = {
   account: {
+    accountClosed: 'Rachunek zamknięty - brak możliwości edycji!',
     add: 'Dodaj rachunek',
     advanced: 'Wyszukiwanie zaawansowane',
     automatic: 'ostatnie ',
     choose: 'Proszę wybrać',
-    closed: 'Rachunek zamknięty - brak możliwości edycji!',
+    closed: 'Stan rachunku',
     createXml: 'Wygeneruj plik',
     dateFrom: 'Data początkowa',
     dateTo: 'Data końcowa',
@@ -13,7 +14,25 @@ const labels = {
     foundCustom: ' wyników z podanego zakresu',
     list: 'Lista rachunków - ',
     management: 'Zarządzanie rachunkami',
-    state: 'Stan rachunku',
+    modal: {
+      accessories: 'Akcesoria',
+      address: 'Numer przesyłki',
+      amount: 'Kwota',
+      book: 'Książki',
+      car: 'Auta',
+      cashTime: 'Data wpłaty',
+      coach: 'Wagony',
+      element: 'Elementy makiety',
+      locs: 'Lokomotywy',
+      receipt: 'Numer dokumentu',
+      receiptTime: 'Data paragonu',
+      recipient: 'Zamówienie',
+      remarks: 'Uwagi',
+      state: 'Rodzaj rachunku',
+      type: 'Typ rachunku'
+    },
+    modalEdit: 'Zmodyfikuj istniejący rachunek',
+    modalNew: 'Dodaj nowy rachunek',
     title: 'Manager rachunków Ad9BIS',
     type: 'Typ rachunku'
   },
@@ -77,6 +96,7 @@ const labels = {
   placeholders: {
     ammount: 'Podaj kwotę',
     chooseNumber: 'Wybierz numer',
+    deliverynumber: 'Numer przesyłki',
     description: 'Podaj opis',
     descriptionShort: 'Podaj krótki opis',
     email: 'Wpisz adres',
@@ -89,6 +109,7 @@ const labels = {
     password: 'Podaj hasło',
     price: 'Podaj cenę',
     quantity: 'Podaj ilość',
+    remarks: 'Wpisz uwagi',
     tags: 'Podaj tagi (po przecinku)'
   },
   postal: {

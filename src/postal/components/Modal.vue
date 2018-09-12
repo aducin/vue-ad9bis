@@ -44,22 +44,23 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
-import PostalService from '../../services/postalService'
 import Config from '../../config'
 import Labels from '../../labels'
+import PostalService from '../../services/postalService'
+import { floatNumber } from '../../functions/floatNumber'
+import { required } from 'vuelidate/lib/validators'
 
-const floatNumber = (value) => !isNaN(value.replace(',', '.'))
+// const floatNumber = (value) => !isNaN(value.replace(',', '.'))
 
 export default {
   name: 'PostalModal',
   data () {
     return {
+      buttons: Labels.buttons,
       currency: Config.currency,
       disable: false,
       display: false,
       labels: Labels.postal,
-      buttons: Labels.buttons,
       message: undefined,
       newAmount: '0',
       placeholder: Labels.placeholders.amount,

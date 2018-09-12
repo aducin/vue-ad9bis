@@ -53,7 +53,7 @@ import AccountService from '../../services/accountService'
 import MessageService from '../../services/messageService'
 import Config from '../../config'
 import Labels from '../../labels'
-import { sortList } from '../../functions/sort'
+import { setList } from '../../functions/account/setList'
 
 export default {
   name: 'AccountDetail',
@@ -76,22 +76,18 @@ export default {
         this.activeRow = null
       } else if (closed) {
         window.scrollTo(0, 0)
-        MessageService.error.next(this.labels.closed)
+        MessageService.error.next(this.labels.accountClosed)
       } else {
         this.activeRow = id
+        let curIndex = this.list.findIndex(el => parseInt(el.id) === parseInt(id))
+        if (curIndex !== -1) {
+          AccountService.setActiveRow(this.list[curIndex])
+        }
       }
     },
     setData () {
       this.innerData = this.data
-      let list = this.data.list.map(el => {
-        el.amountFloat = parseFloat(el.amount)
-        let indexCheck = this.options.types.findIndex(innerEl => parseInt(el.type) === parseInt(innerEl.value))
-        if (indexCheck !== -1) {
-          el.typeName = this.options.types[indexCheck].text
-        }
-        return el
-      })
-      this.list = sortList(list, this.sortBy, this.ascending)
+      this.list = setList(this.data.list, this.sortBy, this.ascending, this.options)
     },
     sortTable (name) {
       if (name !== 'id' && name !== 'remarks') {

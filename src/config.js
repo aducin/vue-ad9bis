@@ -58,9 +58,9 @@ const config = {
     productHistoryHeaders: ['Lp.', 'Data', 'Ilość', 'Miejsce', 'Sklep'],
     productListHeaders: ['ID', 'Miniatura', 'Nazwa', 'Ilość', 'Cena SP', 'Cena NP', 'Akcje'],
     states: [
-      { value: 1, text: 'Otwarty' },
-      { value: 2, text: 'Zamknięty' },
-      { value: 3, text: 'Nieodebrany' }
+      { value: 0, text: 'Otwarty' },
+      { value: 1, text: 'Zamknięty' },
+      { value: 2, text: 'Nieodebrany' }
     ],
     postalHeaders: ['Lp.', 'Kwota', 'Data'],
     types: [
