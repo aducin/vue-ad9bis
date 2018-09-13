@@ -1,5 +1,5 @@
 <template>
-  <div class="row rowHeight">
+  <div v-if="$v.data[name]" class="row rowHeight">
     <div
       v-bind:class="{'col-sm-7': type === 'small', 'col-sm-4': type === 'big', invalid: $v.data[name].$error}"
       class="left col-12"
@@ -22,8 +22,7 @@
 
 <script>
 import Labels from '../../../labels'
-import { required, numeric } from 'vuelidate/lib/validators'
-import { floatNumber } from '../../../functions/floatNumber'
+import { accountValidator } from '../../../states/accountModalValidator'
 
 export default {
   name: 'SingleRow',
@@ -35,18 +34,7 @@ export default {
   },
   props: ['data', 'name', 'show', 'text', 'type'],
   validations: {
-    data: {
-      amount: { required, floatNumber },
-      recipient: { required },
-      locs: { numeric },
-      coach: { numeric },
-      element: { numeric },
-      accessories: { numeric },
-      car: { numeric },
-      book: { numeric },
-      address: { required: false },
-      remarks: { required: false }
-    }
+    data: accountValidator
   }
 }
 </script>

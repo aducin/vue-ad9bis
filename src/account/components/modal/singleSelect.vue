@@ -4,7 +4,7 @@
       <label class="labelMargin">{{ labels[name] }}</label>
     </div>
     <div class="col-12 col-sm-8">
-      <b-form-select v-model="data[name]" :options="options[type]" class="mb-3 dataWidth" >
+      <b-form-select v-model="data[name]" :disabled="show" :options="options[type]" class="mb-3 dataWidth" >
         <template slot="first">
           <option v-if="action === 'add'" value="null" disabled>-- {{ labels.choose }} --</option>
         </template>
@@ -25,7 +25,7 @@ export default {
       options: Config.options
     }
   },
-  props: ['action', 'data', 'name', 'type']
+  props: ['action', 'data', 'name', 'show', 'type']
 }
 </script>
 

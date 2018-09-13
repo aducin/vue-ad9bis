@@ -92,6 +92,9 @@
 .marginAuto {
   margin: auto;
 }
+.marginBottom10px {
+  margin-bottom: 10px;
+}
 .marginBottom20px {
   margin-bottom: 20px;
 }

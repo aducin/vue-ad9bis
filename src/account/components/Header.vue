@@ -63,14 +63,21 @@
           <b-btn v-b-modal.accountModal @click="open('add')" class="btn btn-primary dataWidth">{{ labels.add }}</b-btn>
         </div>
         <div class="row">
-          <b-btn v-b-modal.accountModal :disabled="editionDisabled" @click="open('edit')" class="btn btn-primary dataWidth">{{ labels.edit }}</b-btn>
+          <b-btn
+            v-b-modal.accountModal :disabled="editionDisabled"
+            @click="open('edit')"
+            class="btn btn-primary dataWidth"
+          >{{ labels.edit }}</b-btn>
         </div>
         <div class="row">
           <button
+            v-if="!path"
             type="button"
             :disabled="!selected.dateFrom || !selected.dateTo"
+            @click="setFile"
             class="btn btn-primary dataWidth"
           >{{ labels.createXml }}</button>
+          <p v-if="path"><a :href="path" target="_blank" >{{ labels.download }}</a></p>
         </div>
       </div>
       <div class="displayNoneBig displayNoneSmall">
@@ -78,9 +85,16 @@
           <h4>{{ labels.management }}</h4>
         </div>
         <div class="mediumRow">
-          <button type="button" class="btn btn-primary mediumButton">{{ labels.add }}</button>
-          <button type="button" class="btn btn-primary mediumButton">{{ labels.edit }}</button>
-          <button type="button" class="btn btn-primary mediumButton">{{ labels.createXml }}</button>
+          <button type="button" @click="open('add')" class="btn btn-primary mediumButton">{{ labels.add }}</button>
+          <button type="button" :disabled="editionDisabled" @click="open('edit')" class="btn btn-primary mediumButton">{{ labels.edit }}</button>
+          <button
+            v-if="!path"
+            type="button"
+            :disabled="!selected.dateFrom || !selected.dateTo"
+            @click="setFile"
+            class="btn btn-primary mediumButton"
+          >{{ labels.createXml }}</button>
+          <p v-if="path"><a :href="path" target="_blank" >{{ labels.download }}</a></p>
         </div>
       </div>
     </div>
@@ -90,25 +104,29 @@
 
 <script>
 import { headerState } from '../../states/accountHeaderState'
+import { newAccount } from '../../states/newAccount'
 import AccountModal from './Modal.vue'
 import AccountService from '../../services/accountService'
 import DatePicker from 'vue2-datepicker'
+import MessageService from '../../services/messageService'
 import { setDate } from '../../functions/setDate'
 
 export default {
   name: 'AccountHeader',
+  data () {
+    return headerState
+  },
   components: {
     'account-modal': AccountModal,
     DatePicker
-  },
-  data () {
-    return headerState
   },
   methods: {
     open (action) {
       this.action = action
       if (action === 'edit') {
         this.modalData = {...AccountService.activeRow}
+      } else if (action === 'add') {
+        this.modalData = {...newAccount}
       }
     },
     setDetails () {
@@ -121,6 +139,20 @@ export default {
         }
       }
       this.$emit('setData', curSelected)
+    },
+    setFile () {
+      if (this.selected.dateFrom !== null && this.selected.dateTo !== null) {
+        AccountService.createXml(setDate(this.selected.dateFrom), setDate(this.selected.dateTo), this.$store.state.token)
+          .then(response => {
+            if (response.data.success) {
+              MessageService.success.next(response.data.reason)
+            } else {
+              throw new Error(response.data.reason)
+            }
+            this.path = response.data.success ? response.data.path : null
+          })
+          .catch(err => MessageService.error.next(err.message))
+      }
     }
   },
   created () {

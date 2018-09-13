@@ -45,6 +45,11 @@ export const store = new Vuex.Store({
       empty: false,
       list: []
     },
+    lastOrders: {
+      list: [],
+      loading: false,
+      newest: { new: null, old: null }
+    },
     logged: false,
     order: {...defaultOrder},
     postal: {
@@ -61,6 +66,9 @@ export const store = new Vuex.Store({
     },
     apiToken: state => {
       return state.token
+    },
+    lastOrders: state => {
+      return state.lastOrders
     },
     modifiedData: state => {
       return state.modified
@@ -110,6 +118,16 @@ export const store = new Vuex.Store({
     },
     setError: (state, payload) => {
       state.error = payload
+    },
+    setLastOrders: (state, payload) => {
+      state.lastOrders = {
+        list: payload.list,
+        loading: false,
+        newest: payload.newest
+      }
+    },
+    setLastOrdersLoading: (state, payload) => {
+      state.lastOrders.loading = true
     },
     setLoggedOut: (state) => {
       state.logged = false
@@ -194,6 +212,8 @@ export const store = new Vuex.Store({
     accountData: ({ commit }, payload) => commit('setAccount', payload),
     clearProduct: ({ commit }, payload) => commit('clearProduct'),
     error: ({ commit }, payload) => commit('setError', payload),
+    lastOrders: ({ commit }, payload) => commit('setLastOrders', payload),
+    lastOrdersLoading: ({ commit }) => commit('setLastOrdersLoading'),
     modified: ({ commit }, payload) => commit('setModified', payload),
     orderDetails: ({ commit }, payload) => commit('setOrderData', payload),
     orderDiscount: ({ commit }, payload) => commit('setOrderData', payload),

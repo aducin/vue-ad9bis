@@ -1,10 +1,12 @@
 import axios from 'axios'
-import { Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
+import 'rxjs/add/observable/interval'
 
 import Config from '../config'
 const url = Config.url
 class ProductService {
   nameSearch = new Subject()
+  newestOrdersInterval = Observable.interval(Config.intervalOrders);
   // constructor () {}
 
   deleteModified (id) {
@@ -25,6 +27,10 @@ class ProductService {
   getHistory (params) {
     return axios.get(url, {params})
   }
+  getLastOrders () {
+    let path = url + '?orders=true&last=true'
+    return axios.get(path)
+  }
   getManufactorers () {
     let path = url + '?manufacturer=true'
     return axios.get(path)
@@ -35,6 +41,10 @@ class ProductService {
   }
   getNameList (params) {
     return axios.get(url, {params})
+  }
+  modifyLastOrder (base, id, token) {
+    let path = url + '/orders/last/' + base + '/' + id + '/' + token
+    return axios.get(path)
   }
   setUpdate (data) {
     return axios.post(url, {data})

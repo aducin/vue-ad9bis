@@ -22,6 +22,7 @@
       ></product-modal>
     </transition-group>
     <modified v-if="action === 'additional'"></modified>
+    <last-orders v-if="action === 'additional'"></last-orders>
     <busy v-if="productLoading" class="marginAuto"></busy>
     <b-btn v-b-modal.basicModal ref="openModal" class="displayedNone">Open modal</b-btn>
   </div>
@@ -29,6 +30,7 @@
 
 <script>
 import Circle from 'vue-loading-spinner/src/components/Circle4'
+import LastOrders from './components/LastOrders.vue'
 import Modified from './components/Modified.vue'
 import ProductDetail from './components/Detail.vue'
 import ProductEdition from './components/Edition.vue'
@@ -45,7 +47,8 @@ export default {
     return {
       action: null,
       id: null,
-      loading: false
+      loading: false,
+      subscription: null
     }
   },
   components: {
@@ -54,6 +57,7 @@ export default {
     'product-header': ProductHeader,
     'product-history': ProductHistory,
     'product-modal': ProductModal,
+    'last-orders': LastOrders,
     'modified': Modified,
     'busy': Circle
   },
@@ -128,9 +132,18 @@ export default {
     this.$store.watch(
       (state) => this.checkModal(state)
     )
+    this.subscription = ProductService.newestOrdersInterval.subscribe(() => {
+      this.$store.dispatch('lastOrdersLoading')
+      ProductService.getLastOrders().then(response => {
+        if (response.data.success) {
+          this.$store.dispatch('lastOrders', { list: response.data.list, newest: response.data.newest })
+        }
+      })
+    })
   },
   destroyed () {
     this.clear()
+    this.subscription = null
   }
 }
 </script>

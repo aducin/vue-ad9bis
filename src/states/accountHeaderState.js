@@ -8,6 +8,7 @@ export const headerState = {
   labels: Labels.account,
   modalData: {},
   options: Config.options,
+  path: null,
   selected: {
     dateFrom: '',
     dateTo: '',

@@ -1,7 +1,11 @@
 const config = {
+  ajaxConfig: {
+    headers: {'X-My-Custom-Header': 'Header-Value'}
+  },
   currency: 'zł',
   defaultUrl: 'product',
   imageUrl: 'http://modele-ad9bis.pl/img/p/',
+  intervalOrders: 600000,
   linkUrl: 'http://ad9bis.vot.pl/',
   linkSuffix: 'wagony-towarowe/',
   mailSuffix: 'cms_spa/web/orders/',
@@ -38,6 +42,7 @@ const config = {
       { value: 'used', text: 'Używany' },
       { value: 'renewed', text: 'Odnowiony' }
     ],
+    lastOrders: ['Numer', 'Referencja', 'Data', 'Suma', 'Przesyłka', 'Akcja'],
     modifiedHeaders: ['ID', 'Nazwa', 'Data', 'Akcja'],
     orderDetailHeaders: ['Miniatura', 'Numer ID', 'Nazwa', 'Na stanie', 'Drugi sklep', 'Zamówione', 'Opcje'],
     orderEvenHeaders: [
