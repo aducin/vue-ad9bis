@@ -13,6 +13,10 @@ class ProductService {
     let path = url + '/modified/' + id
     return axios.delete(path)
   }
+  deletePrinting (id) {
+    let path = url + '/printing/' + id
+    return axios.delete(path)
+  }
   getBasicId (id) {
     let path = url + '?basicProduct=' + id
     return axios.get(path)
@@ -41,6 +45,10 @@ class ProductService {
   }
   getNameList (params) {
     return axios.get(url, {params})
+  }
+  getPrintings () {
+    let path = url + '?pritning=true'
+    return axios.get(path)
   }
   modifyLastOrder (base, id, token) {
     let path = url + '/orders/last/' + base + '/' + id + '/' + token

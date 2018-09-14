@@ -10,19 +10,19 @@
         v-if="(productData.type === 'nameSearch' || productData.type === 'basic') && productData.list"
         v-bind:data="productData.list"
       ></product-detail>
-      <product-edition key="2"
-        v-if="action === 'productEdition'"
-        v-bind:data="productData.data"
-      ></product-edition>
-      <product-history v-if="action === 'productHistory'" key="3"></product-history>
+      <product-edition key="2" v-if="action === 'productEdition'" v-bind:data="productData.data"></product-edition>
+      <product-history key="3" v-if="action === 'productHistory'"></product-history>
       <product-modal key="4"
         v-bind:data="productData.data"
         v-bind:list="productData.list"
         @closeModal="clear"
       ></product-modal>
     </transition-group>
-    <modified v-if="action === 'additional'"></modified>
-    <last-orders v-if="action === 'additional'"></last-orders>
+    <template v-if="action === 'additional'">
+      <modified></modified>
+      <last-orders></last-orders>
+      <printings></printings>
+    </template>
     <busy v-if="productLoading" class="marginAuto"></busy>
     <b-btn v-b-modal.basicModal ref="openModal" class="displayedNone">Open modal</b-btn>
   </div>
@@ -32,6 +32,7 @@
 import Circle from 'vue-loading-spinner/src/components/Circle4'
 import LastOrders from './components/LastOrders.vue'
 import Modified from './components/Modified.vue'
+import Printings from './components/Printings.vue'
 import ProductDetail from './components/Detail.vue'
 import ProductEdition from './components/Edition.vue'
 import ProductHeader from './components/Header.vue'
@@ -59,6 +60,7 @@ export default {
     'product-modal': ProductModal,
     'last-orders': LastOrders,
     'modified': Modified,
+    'printings': Printings,
     'busy': Circle
   },
   methods: {
@@ -147,6 +149,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

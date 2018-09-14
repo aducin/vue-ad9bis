@@ -60,6 +60,7 @@ const config = {
       { value: 1, text: 'Nowy Panel' },
       { value: 2, text: 'Stary Panel' }
     ],
+    printingsHeaders: ['Lp.', 'Nazwa', 'Opis', 'Data', 'Akcja'],
     productHistoryHeaders: ['Lp.', 'Data', 'Ilość', 'Miejsce', 'Sklep'],
     productListHeaders: ['ID', 'Miniatura', 'Nazwa', 'Ilość', 'Cena SP', 'Cena NP', 'Akcje'],
     states: [
@@ -76,6 +77,7 @@ const config = {
       { value: 5, text: 'Zwrot' }
     ]
   },
+  printingUrl: 'http://modele-ad9bis.pl/cms_spa/files/printing/',
   timer: 3000,
   timerCookie: 260000,
   url: 'http://local.angular/try.php'

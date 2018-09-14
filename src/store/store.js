@@ -57,6 +57,12 @@ export const store = new Vuex.Store({
       list: [],
       loading: false
     },
+    printings: {
+      deliveryList: [],
+      empty: false,
+      emptyDelivery: false,
+      list: []
+    },
     product: {...defaultProduct},
     token: undefined
   },
@@ -84,6 +90,9 @@ export const store = new Vuex.Store({
     },
     postalLoading: state => {
       return state.postal.loading
+    },
+    printings: state => {
+      return state.printings
     },
     productCategories: state => {
       return state.product.categories
@@ -186,6 +195,9 @@ export const store = new Vuex.Store({
     setPostalLoading: (state, payload) => {
       state.postal.loading = payload
     },
+    setPrintings: (state, payload) => {
+      state.printings = payload
+    },
     setProductData: (state, payload) => {
       state.product = modifyProduct(state.product, payload)
     },
@@ -221,6 +233,7 @@ export const store = new Vuex.Store({
     orderEven: ({ commit }, payload) => commit('setOrderEven', payload),
     orderMail: ({ commit }, payload) => commit('setOrderData', payload),
     orderVoucher: ({ commit }, payload) => commit('setOrderVoucher', payload),
+    printings: ({ commit }, payload) => commit('setPrintings', payload),
     productData: ({ commit }, payload) => commit('setProductData', payload),
     productHistory: ({ commit }, payload) => commit('setProductHistory', payload),
     productLoading: ({ commit }, payload) => commit('setProductLoading', payload),

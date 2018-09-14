@@ -125,6 +125,7 @@ const labels = {
     title: 'Manager wysyłek Ad9BIS'
   },
   product: {
+    addPrinting: 'Dodaj dokument',
     basicDisabled: 'Zmiana cen wyłącznie przez pełną edycję!',
     byId: 'Wyszukiwanie po ID:',
     byName: 'Wyszukiwanie po nazwie:',
@@ -133,7 +134,9 @@ const labels = {
     chooseCategory: 'Wybierz kategorię',
     chooseManufactorer: 'Wybierz producenta',
     deleteOrder: 'Usuń zamówienie',
+    deletePrinting: 'Usuń plik',
     discount: ' - rabat wynosi: ',
+    download: 'Pobierz',
     edition: {
       actions: 'Akcje:',
       active: 'Aktywność:',
@@ -170,11 +173,13 @@ const labels = {
     name: 'Nazwa produktu',
     noHistory: 'Nie ma historii zmian żądanego produktu',
     noLastOrders: 'Obecnie brak nowych zamówień',
+    noPrintings: 'Obecnie brak dokumentów do wydruku',
     otherManufactorer: 'Brak (inny producent)',
     panels: { new: 'Nowy panel', old: 'Stary panel' },
     priceNew: 'Cena nominalna: ',
     priceRealNew: 'Uwaga! Realna cena w nowym panelu to:',
     priceRealOld: 'Uwaga! Realna cena w starym panelu to:',
+    printings: 'Dokumenty do wydruku:',
     quantityEqual: 'Ta sama ilość w obu panelach',
     quantityNotEqual: 'UWAGA - ilość w nowym panelu to: ',
     search: 'Wyszukaj',
