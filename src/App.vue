@@ -103,6 +103,7 @@ export default {
 
 <style>
   .messageContent {
+    height: 65px;
     width: 60%;
     margin: auto;
     margin-bottom: 10px;

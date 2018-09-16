@@ -4,7 +4,15 @@
     <div v-if="!loading" class="outerContent">
       <div class="content">
         <div class="row">
-          <button class="btn btn-primary">{{ labels.addPrinting }}</button>
+          <input v-if="!hideButton"
+            ref="addFile"
+            enctype="multipart/form-data"
+            type="file"
+            accept="application/pdf"
+            class="displayedNone"
+            @change="filesChange()"
+            />
+          <input class="btn btn-primary" type="button" :value="labels.addPrinting" @click="$refs.addFile.click()" />
         </div>
         <h3 v-if="printings.empty" class="left">{{ labels.noPrintings }}</h3>
         <div v-if="!printings.empty">
@@ -13,7 +21,7 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                    <th v-for="item in config.options.printingsHeaders" :key="item">{{ item }}</th>
+                  <th v-for="item in config.options.printingsHeaders" :key="item">{{ item }}</th>
                 </tr>
               </thead>
               <tbody class="table-striped">
@@ -45,16 +53,18 @@
               </tbody>
             </table>
             </div>
-            <p>{{ printings }}</p>
         </div>
       </div>
     </div>
+    <b-btn ref="addModal" v-b-modal.printingsModal class="displayedNone"></b-btn>
+    <printings-modal v-if="!hideModal" :name="fileName" @addFile="addFile" @fileDelete="hideButton = false"></printings-modal>
   </div>
 </template>
 
 <script>
 import Circle from 'vue-loading-spinner/src/components/Circle4'
 import MessageService from '../../services/messageService'
+import PrintingsModal from './PrintingsModal'
 import ProductService from '../../services/productService'
 
 import Config from '../../config'
@@ -66,28 +76,55 @@ export default {
   name: 'Printings',
   data () {
     return {
+      file: null,
+      fileName: null,
+      hideButton: false,
+      hideModal: false,
       labels: Labels.product,
       loading: false,
       config: Config
     }
   },
   components: {
-    'busy': Circle
+    'busy': Circle,
+    'printings-modal': PrintingsModal
   },
   methods: {
+    addFile (description) {
+      const fd = new FormData()
+      fd.append('file[]', this.file, this.file.name)
+      ProductService.saveFile(description, this.$store.state.token, fd)
+        .then(response => {
+          let type = response.data.success ? 'success' : 'error'
+          this.hideModal = true
+          window.scrollTo(0, 0)
+          MessageService[type].next(response.data.reason)
+        })
+        .finally(() => {
+          this.hideButton = false
+          this.hideModal = false
+        })
+    },
     deleteItem (id) {
       ProductService.deletePrinting(id)
-      .then(response => {
-        if (response.data.success) {
-          MessageService.success.next(response.data.reason)
-        } else {
-          throw new Error(response.data.reason)
-        }
-      })
-      .catch(err => MessageService.error.next(err.message))
-      .finally(() => {
-        window.scrollTo(0, 0)
-      })   
+        .then(response => {
+          if (response.data.success) {
+            MessageService.success.next(response.data.reason)
+          } else {
+            throw new Error(response.data.reason)
+          }
+        })
+        .catch(err => MessageService.error.next(err.message))
+        .finally(() => {
+          window.scrollTo(0, 0)
+        })
+    },
+    filesChange () {
+      this.hideButton = true
+      this.hideModal = false
+      this.file = this.$refs.addFile.files[0]
+      this.fileName = this.file.name
+      this.$refs.addModal.click()
     },
     getData () {
       this.loading = true
@@ -108,12 +145,13 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    hideFile () {
+      this.hideModal = true
     }
   },
   computed: {
-    ...mapGetters([
-      'printings'
-    ])
+    ...mapGetters(['printings'])
   },
   created () {
     this.getData()

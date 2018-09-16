@@ -135,6 +135,7 @@ export default {
       (state) => this.checkModal(state)
     )
     this.subscription = ProductService.newestOrdersInterval.subscribe(() => {
+      console.log('i was inside an interval observer!')
       this.$store.dispatch('lastOrdersLoading')
       ProductService.getLastOrders().then(response => {
         if (response.data.success) {

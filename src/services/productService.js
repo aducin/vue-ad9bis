@@ -54,6 +54,11 @@ class ProductService {
     let path = url + '/orders/last/' + base + '/' + id + '/' + token
     return axios.get(path)
   }
+  saveFile (description, token, fd) {
+    let path = url + '?pritning=true'
+    path += '/' + token + '?description=' + description
+    return axios.post(path, fd)
+  }
   setUpdate (data) {
     return axios.post(url, {data})
   }
