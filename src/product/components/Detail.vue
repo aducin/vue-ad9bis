@@ -64,17 +64,16 @@
 <script>
 import MessageService from '../../services/messageService'
 import ProductService from '../../services/productService'
+import labelsProductMixin from '../../mixins/labelsProduct'
+import universalMixin from '../../mixins/universal'
 import Config from '../../config'
-import Labels from '../../labels'
 
 export default {
   name: 'ProductDetail',
+  mixins: [labelsProductMixin, universalMixin],
   data () {
     return {
-      headers: Config.options.productListHeaders,
-      imageUrl: Config.imageUrl,
-      labels: Labels.product,
-      link: Config.linkUrl + Config.linkSuffix
+      headers: Config.options.productListHeaders
     }
   },
   methods: {

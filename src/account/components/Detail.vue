@@ -29,7 +29,7 @@
             <td v-bind:class="{ invalid: item.closed === 1, colorSuccess: item.closed !== 1 }">{{ index + 1 }}</td>
             <td>{{ item.recipient }}</td>
             <td>{{ item.address }}</td>
-            <td>{{ item.amount }}{{ currency }}</td>
+            <td>{{ item.amount | currency }}</td>
             <td>{{ item.typeName }}</td>
             <td>{{ item.receipt }}</td>
             <td>{{ item.receiptTime }}</td>
@@ -61,7 +61,6 @@ export default {
     return {
       activeRow: null,
       ascending: false,
-      currency: Config.currency,
       innerData: {},
       labels: Labels.account,
       list: [],

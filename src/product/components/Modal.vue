@@ -96,20 +96,20 @@
 
 <script>
 import ProductService from '../../services/productService'
+import universalMixin from '../../mixins/universal'
 import Config from '../../config'
 import Labels from '../../labels'
 
 export default {
   name: 'ProductModal',
+  mixins: [universalMixin],
   data () {
     return {
-      buttons: Labels.buttons,
       config: Config,
       disabled: true,
       display: false,
       error: { quantity: false, price: false },
       labels: Labels.product,
-      placeholders: Labels.placeholders,
       type: null
     }
   },

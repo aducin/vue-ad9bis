@@ -1,7 +1,7 @@
 <template>
   <div class="outerContent">
     <div v-if="data.id" class="content">
-      <a :href="config.linkUrl + $route.params.id + '-' + data.url + '.html'" target="blank" class="pointer">
+      <a :href="linkUrl + $route.params.id + '-' + data.url + '.html'" target="blank" class="pointer">
         <h3 class="left">{{ labels.editionTitle }}{{ $route.params.id }}</h3>
       </a>
       <single-row v-bind:data="data" type="name" @update="updateData"></single-row>
@@ -40,7 +40,8 @@ import PriceRow from './edition/PriceRow.vue'
 import SelectRow from './edition/SelectRow.vue'
 import SingleRow from './edition/SingleRow.vue'
 import ToggledRow from './edition/ToggledRow.vue'
-import Config from '../../config'
+import labelsProductMixin from '../../mixins/labelsProduct'
+import universalMixin from '../../mixins/universal'
 import Labels from '../../labels'
 
 import MessageService from '../../services/messageService'
@@ -50,16 +51,13 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProductEdition',
+  mixins: [labelsProductMixin, universalMixin],
   data () {
     return {
-      buttons: Labels.buttons,
       categoriesDisplayed: false,
-      config: Config,
-      labels: Labels.product,
       modified: false,
       photos: false,
       photosDisplayed: false,
-      placeholders: Labels.placeholders
     }
   },
   components: {

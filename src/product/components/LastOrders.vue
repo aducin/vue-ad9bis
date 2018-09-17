@@ -48,20 +48,16 @@
 import Circle from 'vue-loading-spinner/src/components/Circle4'
 import MessageService from '../../services/messageService'
 import ProductService from '../../services/productService'
+import labelsProductMixin from '../../mixins/labelsProduct'
+import universalMixin from '../../mixins/universal'
 
 import Config from '../../config'
-import Labels from '../../labels'
 
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'LastOrders',
-  data () {
-    return {
-      labels: Labels.product,
-      options: Config.options
-    }
-  },
+  mixins: [labelsProductMixin, universalMixin],
   components: {
     'busy': Circle
   },

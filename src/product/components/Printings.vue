@@ -68,19 +68,20 @@ import PrintingsModal from './PrintingsModal'
 import ProductService from '../../services/productService'
 
 import Config from '../../config'
+import labelsProductMixin from '../../mixins/labelsProduct'
 import Labels from '../../labels'
 
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Printings',
+  mixins: [labelsProductMixin],
   data () {
     return {
       file: null,
       fileName: null,
       hideButton: false,
       hideModal: false,
-      labels: Labels.product,
       loading: false,
       config: Config
     }

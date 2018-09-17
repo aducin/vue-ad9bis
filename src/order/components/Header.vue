@@ -75,16 +75,15 @@
 
 <script>
 import { required, numeric } from 'vuelidate/lib/validators'
-import Config from '../../config'
+import universalMixin from '../../mixins/universal'
 import Labels from '../../labels'
 
 export default {
   name: 'OrderHeader',
+  mixins: [universalMixin],
   data () {
     return {
       labels: Labels.order,
-      options: Config.options,
-      placeholders: Labels.placeholders,
       selected: {
         action: null,
         actionOption: null,

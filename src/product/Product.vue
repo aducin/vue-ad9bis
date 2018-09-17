@@ -18,7 +18,7 @@
         @closeModal="clear"
       ></product-modal>
     </transition-group>
-    <template v-if="action === 'additional'">
+    <template v-if="!productData.type && action === 'additional'">
       <modified></modified>
       <last-orders></last-orders>
       <printings></printings>
@@ -135,7 +135,6 @@ export default {
       (state) => this.checkModal(state)
     )
     this.subscription = ProductService.newestOrdersInterval.subscribe(() => {
-      console.log('i was inside an interval observer!')
       this.$store.dispatch('lastOrdersLoading')
       ProductService.getLastOrders().then(response => {
         if (response.data.success) {

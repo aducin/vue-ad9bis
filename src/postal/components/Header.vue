@@ -18,7 +18,7 @@
       </div>
       <div>
         <div class="col absoluteSmall">
-          <h4 v-if="postalAmount">{{ postalAmount }}{{ currency }}</h4>
+          <h4 v-if="postalAmount">{{ postalAmount | currency }}</h4>
           <h4 v-else><i>{{ labels.noAmount }}</i></h4>
         </div>
         <div class="col marginTop">
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import Config from '../../config'
 import Labels from '../../labels'
 import PostalModal from './Modal.vue'
 
@@ -49,7 +48,6 @@ export default {
   data () {
     return {
       action: null,
-      currency: Config.currency,
       labels: Labels.postal
     }
   },

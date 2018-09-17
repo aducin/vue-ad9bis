@@ -27,7 +27,7 @@
             />
             </div>
             <div class="row">
-              <h3 class="marginLeft">{{ currentAmount }}{{ currency }}</h3>
+              <h3 class="marginLeft">{{ currentAmount | currency }}</h3>
             </div>
           </div>
         </div>
@@ -57,7 +57,6 @@ export default {
   data () {
     return {
       buttons: Labels.buttons,
-      currency: Config.currency,
       disable: false,
       display: false,
       labels: Labels.postal,

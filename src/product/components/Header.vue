@@ -85,18 +85,18 @@
 import { required, numeric, minValue } from 'vuelidate/lib/validators'
 import MessageService from '../../services/messageService'
 import ProductService from '../../services/productService'
-import Config from '../../config'
+import universalMixin from '../../mixins/universal'
 import Labels from '../../labels'
 
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProductHeader',
+  mixins: [universalMixin],
   data () {
     return {
       labels: Labels.product,
       nameSearch: false,
-      placeholders: Labels.placeholders,
       selected: { category: null, id: null, manufactorer: null, name: '' }
     }
   },
@@ -141,7 +141,7 @@ export default {
                 MessageService.error.next(err.message)
               })
           }
-        }, Config.timer)
+        }, this.timer)
       }
     }
   },
