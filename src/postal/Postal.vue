@@ -1,14 +1,9 @@
 <template>
   <div>
     <postal-header @refresh="getData"></postal-header>
-    <transition
-      mode="out-in"
-      enter-active="enterTransition"
-      enter-active-class="animated flipInX"
-      leave-active-class="animated flipOutX"
-    >
+    <flip>
       <postal-detail></postal-detail>
-    </transition>
+    </flip>
     <busy v-if="postalLoading" class="marginAuto"></busy>
   </div>
 </template>
@@ -18,6 +13,7 @@ import Circle from 'vue-loading-spinner/src/components/Circle4'
 import PostalDetail from './components/Detail.vue'
 import PostalHeader from './components/Header.vue'
 import PostalService from '../services/postalService'
+import Flip from '../slots/TransitionFlip.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -26,7 +22,8 @@ export default {
   components: {
     'postal-detail': PostalDetail,
     'postal-header': PostalHeader,
-    'busy': Circle
+    'busy': Circle,
+    'flip': Flip
   },
   methods: {
     getData () {

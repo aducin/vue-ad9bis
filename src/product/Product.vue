@@ -1,11 +1,7 @@
 <template>
   <div>
     <product-header></product-header>
-    <transition-group
-      mode="out-in"
-      enter-active="enterTransition"
-      enter-active-class="animated flipInX"
-      leave-active-class="animated flipOutX">
+    <flip-group>
       <product-detail key="1"
         v-if="(productData.type === 'nameSearch' || productData.type === 'basic') && productData.list"
         v-bind:data="productData.list"
@@ -17,11 +13,13 @@
         v-bind:list="productData.list"
         @closeModal="clear"
       ></product-modal>
-    </transition-group>
+    </flip-group>
     <template v-if="!productData.type && action === 'additional'">
-      <modified></modified>
-      <last-orders></last-orders>
-      <printings></printings>
+      <flip-group>
+        <modified key="1"></modified>
+        <last-orders key="2"></last-orders>
+        <printings key="3"></printings>
+      </flip-group>
     </template>
     <busy v-if="productLoading" class="marginAuto"></busy>
     <b-btn v-b-modal.basicModal ref="openModal" class="displayedNone">Open modal</b-btn>
@@ -39,6 +37,7 @@ import ProductHeader from './components/Header.vue'
 import ProductHistory from './components/History.vue'
 import ProductModal from './components/Modal.vue'
 import ProductService from '../services/productService'
+import FlipGroup from '../slots/TransitionGroupFlip.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -61,7 +60,8 @@ export default {
     'last-orders': LastOrders,
     'modified': Modified,
     'printings': Printings,
-    'busy': Circle
+    'busy': Circle,
+    'flip-group': FlipGroup
   },
   methods: {
     checkAction () {

@@ -42,7 +42,6 @@ import SingleRow from './edition/SingleRow.vue'
 import ToggledRow from './edition/ToggledRow.vue'
 import labelsProductMixin from '../../mixins/labelsProduct'
 import universalMixin from '../../mixins/universal'
-import Labels from '../../labels'
 
 import MessageService from '../../services/messageService'
 import ProductService from '../../services/productService'
@@ -57,7 +56,7 @@ export default {
       categoriesDisplayed: false,
       modified: false,
       photos: false,
-      photosDisplayed: false,
+      photosDisplayed: false
     }
   },
   components: {

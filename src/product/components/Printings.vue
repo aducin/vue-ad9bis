@@ -69,7 +69,6 @@ import ProductService from '../../services/productService'
 
 import Config from '../../config'
 import labelsProductMixin from '../../mixins/labelsProduct'
-import Labels from '../../labels'
 
 import { mapGetters } from 'vuex'
 

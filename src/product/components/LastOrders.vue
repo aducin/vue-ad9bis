@@ -51,8 +51,6 @@ import ProductService from '../../services/productService'
 import labelsProductMixin from '../../mixins/labelsProduct'
 import universalMixin from '../../mixins/universal'
 
-import Config from '../../config'
-
 import { mapGetters } from 'vuex'
 
 export default {

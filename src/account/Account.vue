@@ -1,14 +1,9 @@
 <template>
   <div>
     <account-header @setData="getData"></account-header>
-    <transition
-      mode="out-in"
-      enter-active="enterTransition"
-      enter-active-class="animated flipInX"
-      leave-active-class="animated flipOutX"
-    >
-      <account-detail v-if="!loading" v-bind:data=accounts></account-detail>
-    </transition>
+    <flip>
+      <account-detail v-if="!loading" v-bind:data="accounts"></account-detail>
+    </flip>
     <busy v-if="loading" class="marginAuto"></busy>
   </div>
 </template>
@@ -19,6 +14,7 @@ import AccountService from '../services/accountService'
 import MessageService from '../services/messageService'
 import AccountDetail from './components/Detail.vue'
 import AccountHeader from './components/Header.vue'
+import Flip from '../slots/TransitionFlip.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -32,7 +28,8 @@ export default {
   components: {
     'account-detail': AccountDetail,
     'account-header': AccountHeader,
-    'busy': Circle
+    'busy': Circle,
+    'flip': Flip
   },
   methods: {
     getData (params = null) {

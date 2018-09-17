@@ -1,13 +1,9 @@
 <template>
   <div class="hello">
     <account-header></account-header>
-    <transition
-      mode="out-in"
-      enter-active="enterTransition"
-      enter-active-class="animated flipInX"
-      leave-active-class="animated flipOutX">
+    <flip>
       <account-detail v-if="!loading"></account-detail>
-    </transition>
+    </flip>
     <busy v-if="loading" class="marginAuto"></busy>
   </div>
 </template>
@@ -18,6 +14,7 @@ import MessageService from '../services/messageService'
 import OrderService from '../services/orderService'
 import AccountDetail from './components/Detail.vue'
 import AccountHeader from './components/Header.vue'
+import Flip from '../slots/TransitionFlip.vue'
 
 export default {
   name: 'Order',
@@ -31,7 +28,8 @@ export default {
   components: {
     'account-detail': AccountDetail,
     'account-header': AccountHeader,
-    'busy': Circle
+    'busy': Circle,
+    'flip': Flip
   },
   methods: {
     checkAction (dispatch) {
