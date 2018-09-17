@@ -56,8 +56,8 @@
             <tr v-for="item in data.data.data" :key="item.productId" class="paddingTop10">
               <td >{{ item.id }}</td>
               <td>{{ item.reference }}</td>
-              <td>{{ item.totalProduct }}{{ currency }}</td>
-              <td>{{ item.totalShipping }}{{ currency }}</td>
+              <td>{{ item.totalProduct | floatFixed | currency }}</td>
+              <td>{{ item.totalShipping | floatFixed | currency }}</td>
               <td>{{ item.dateAdd }}</td>
               <td>{{ item.voucherNumber }}</td>
             </tr>
@@ -76,7 +76,6 @@ export default {
   data () {
     return {
       buttons: Labels.buttons,
-      currency: Config.currency,
       headersEven: Config.options.orderEvenHeaders,
       headersOrder: Config.options.orderDetailHeaders,
       headersVoucher: Config.options.orderVoucherHeaders,

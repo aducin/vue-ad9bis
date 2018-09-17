@@ -19,17 +19,17 @@
           </td>
           <td class="paddingTop">{{ item.quantity }}</td>
           <td class="paddingTop" v-if="!item.discount.old">
-            <p>{{ item.price.old }}{{ currency }}</p>
+            <p>{{ item.price.old | currency }}</p>
           </td>
           <td v-if="item.discount.old" class="invalid paddingTopSmall">
-            <p>{{ item.priceReal.old }}{{ currency }}</p>
+            <p>{{ item.priceReal.old | currency }}</p>
             <p>{{ labels.checkDiscount }}</p>
           </td>
           <td class="paddingTop" v-if="!item.discount.new">
-            <p>{{ item.price.new }}{{ currency }}</p>
+            <p>{{ item.price.new | currency }}</p>
           </td>
           <td v-if="item.discount.new" class="invalid paddingTopSmall">
-            <p>{{ item.priceReal.new }}{{ currency }}</p>
+            <p>{{ item.priceReal.new | currency }}</p>
             <p>{{ labels.checkDiscount }}</p>
           </td>
           <td>
@@ -71,7 +71,6 @@ export default {
   name: 'ProductDetail',
   data () {
     return {
-      currency: Config.currency,
       headers: Config.options.productListHeaders,
       imageUrl: Config.imageUrl,
       labels: Labels.product,

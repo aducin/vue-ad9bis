@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/common.css'
+import './filters/filters'
 
 library.add([faArrowCircleDown, faArrowCircleRight, faArrowCircleUp, faFile, faList, faListAlt, faMinusCircle,
   faNewspaper, faPlusCircle, faTrash])
@@ -33,8 +34,6 @@ Vue.use(BootstrapVue)
 Vue.use(VueCookies)
 Vue.use(Vuelidate)
 Vue.use(VueRx)
-
-Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

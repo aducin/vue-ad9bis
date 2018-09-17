@@ -16,9 +16,9 @@
     </div>
     <div v-if="data.discount[type]" class="alertHeight innerContent row col col-12">
       <div class="alert alert-danger text-center" role="alert">
-        <p>{{ labels[label] }} {{ data.priceReal[type] }}{{ config.currency }}{{ labels.discount }}
+        <p>{{ labels[label] }} {{ data.priceReal[type] | floatFixed | currency }}{{ labels.discount }}
           <span v-if="data.discount[type].reductionType === 'percentage'">{{ data.discount[type].percentage }}%</span>
-          <span v-else>{{ data.discount[type].reduction }}{{ config.currency }}</span>
+          <span v-else>{{ data.discount[type].reduction | floatFixed | currency }}</span>
         </p>
       </div>
     </div>
@@ -26,13 +26,11 @@
 </template>
 
 <script>
-import Config from '../../../config'
 import Labels from '../../../labels'
 export default {
   name: 'PriceEdition',
   data () {
     return {
-      config: Config,
       labels: Labels.product,
       placeholders: Labels.placeholders
     }

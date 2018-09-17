@@ -25,8 +25,8 @@
                     </td>
                     <td class="paddingTop">{{ item.reference }}</td>
                     <td class="paddingTop">{{ item.dateAdd }}</td>
-                    <td class="paddingTop">{{ item.totalProduct }}{{ currency }}</td>
-                    <td class="paddingTop">{{ item.totalShipping }}{{ currency }}</td>
+                    <td class="paddingTop">{{ item.totalProduct | floatFixed | currency }}</td>
+                    <td class="paddingTop">{{ item.totalShipping | floatFixed | currency }}</td>
                     <td>
                       <button @click="deleteRow(k, item.id)" class="btn btn-primary">{{ labels.deleteOrder }}</button>
                     </td>
@@ -58,7 +58,6 @@ export default {
   name: 'LastOrders',
   data () {
     return {
-      currency: Config.currency,
       labels: Labels.product,
       options: Config.options
     }
