@@ -20,14 +20,17 @@
       <toggled-rows v-bind:data="data" @update="setCheckbox"></toggled-rows>
       <checkbox-row v-bind:photos="photos" v-bind:modyfy="modified" @setCheckbox="setCheckbox"></checkbox-row>
       <div class="row top30px">
-        <div class="col col-sm-12 col-md-4">
+        <div :class="{'col-md-3': restoreNameSearch, 'col-md-4': !restoreNameSearch}" class="col col-sm-12">
           <button @click="save" class="btn btn-primary buttons">{{ buttons.save }}</button>
         </div>
-        <div class="col col-sm-12 col-md-4">
+        <div :class="{'col-md-3': restoreNameSearch, 'col-md-4': !restoreNameSearch}" class="col col-sm-12">
           <router-link :to="`/product/${$route.params.id}/history`" class="btn btn-primary buttons">{{ buttons.history }}</router-link>
         </div>
-        <div class="col col-sm-12 col-md-4">
-          <router-link to="/product" tag="button" class="btn btn-danger buttons">{{ buttons.clear }}</router-link>
+        <div v-if="restoreNameSearch" class="col col-sm-12 col-md-3">
+          <button @click="goBack(true)" class="btn btn-primary buttons">{{ buttons.restoreList }}</button>
+        </div>
+        <div :class="{'col-md-3': restoreNameSearch, 'col-md-4': !restoreNameSearch}" class="col col-sm-12">
+          <button @click="goBack(false)" class="btn btn-danger buttons">{{ buttons.clear }}</button>
         </div>
       </div>
     </div>
@@ -41,6 +44,7 @@ import SelectRow from './edition/SelectRow.vue'
 import SingleRow from './edition/SingleRow.vue'
 import ToggledRow from './edition/ToggledRow.vue'
 import labelsProductMixin from '../../mixins/labelsProduct'
+import restoreNameMixin from '../../mixins/restoreName'
 import universalMixin from '../../mixins/universal'
 
 import MessageService from '../../services/messageService'
@@ -50,7 +54,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProductEdition',
-  mixins: [labelsProductMixin, universalMixin],
+  mixins: [labelsProductMixin, restoreNameMixin, universalMixin],
   data () {
     return {
       categoriesDisplayed: false,
@@ -117,6 +121,7 @@ export default {
   },
   created () {
     this.getData()
+    this.setRestore()
   }
 }
 </script>

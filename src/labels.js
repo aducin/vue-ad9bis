@@ -44,6 +44,7 @@ const labels = {
     even: 'Wyrównaj ilości',
     history: 'Historia',
     orderReturn: 'Powrót do zamówienia',
+    restoreList: 'Powrót do listy',
     save: 'Zapisz',
     sendMail: 'Wyślij email',
     showMail: 'Zobacz treść'

@@ -26,19 +26,22 @@
           </tbody>
         </table>
         <div class="row">
-            <div class="col col-12 col-md-4 col-lg-3">
-            <router-link
-                :to="`/product/${$route.params.id}/edition`"
-                tag="button"
-                class="btn btn-primary buttons"
-            >{{ labels.buttons.edition }}</router-link>
+            <div
+              :class="{'col-md-4 col-lg-3': restoreNameSearch, 'col-md-6 col-lg-4': !restoreNameSearch}"
+              class="col col-12">
+              <router-link
+                  :to="`/product/${$route.params.id}/edition`"
+                  tag="button"
+                  class="btn btn-primary buttons"
+              >{{ labels.buttons.edition }}</router-link>
             </div>
-            <div class="col col-12 col-md-4 col-lg-3">
-            <router-link
-                to="/product"
-                tag="button"
-                class="btn btn-danger buttons"
-            >{{ labels.buttons.clear }}</router-link>
+            <div v-if="restoreNameSearch" class="col col-sm-12 col-md-4 col-lg-3">
+              <button @click="goBack(true)" class="btn btn-primary buttons">{{ buttons.restoreList }}</button>
+            </div>
+            <div
+              :class="{'col-md-4 col-lg-3': restoreNameSearch, 'col-md-6 col-lg-4': !restoreNameSearch}"
+              class="col col-12">
+              <button @click="goBack(false)" class="btn btn-danger buttons">{{ buttons.clear }}</button>
             </div>
         </div>
       </div>
@@ -48,6 +51,8 @@
 
 <script>
 import ProductService from '../../services/productService'
+import restoreNameMixin from '../../mixins/restoreName'
+import universalMixin from '../../mixins/universal'
 import Config from '../../config'
 import Labels from '../../labels'
 
@@ -55,10 +60,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProductHistory',
+  mixins: [restoreNameMixin, universalMixin],
   data () {
     return {
       headers: Config.options.productHistoryHeaders,
-      labels: Labels
+      labels: Labels,
+      restoreNameSearch: false
     }
   },
   methods: {
@@ -86,6 +93,7 @@ export default {
   },
   created () {
     this.getData()
+    this.setRestore()
   }
 }
 </script>

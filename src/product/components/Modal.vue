@@ -131,6 +131,7 @@ export default {
         .finally(() => this.setMessage())
     },
     redirect (type) {
+      localStorage.removeItem('vue-nameParams')
       this.close()
       this.$router.push({ name: type, params: {id: this.data.id} })
     },

@@ -23,7 +23,7 @@
         <div class="row">
           <b-form-select
             v-model="selected.category"
-            :disabled="productCategories.length === 0"
+            :disabled="action === 'productEdition' || action === 'productHistory'"
             :options="productCategories"
             class="mb-3 dataWidth"
           >
@@ -38,7 +38,7 @@
         <div class="row">
           <b-form-select
             v-model="selected.manufactorer"
-            :disabled="productManufactorers.length === 0"
+            :disabled="action === 'productEdition' || action === 'productHistory'"
             :options="productManufactorers"
             class="mb-3 dataWidth"
           >
@@ -51,7 +51,12 @@
           <label>{{ labels.name }}</label>
         </div>
         <div class="row">
-          <input type="text" @input="searchName" v-model="selected.name" class="form-control dataWidth" :placeholder="placeholders.name" />
+          <input type="text"
+            @input="searchName"
+            :disabled="action === 'productEdition' || action === 'productHistory'"
+            v-model="selected.name"
+            class="form-control dataWidth"
+            :placeholder="placeholders.name" />
         </div>
       </div>
       <div class="idSearch">
@@ -61,6 +66,7 @@
         <div class="row">
           <input type="text"
             @input="$v.selected.id.$touch()"
+            :disabled="action === 'productEdition' || action === 'productHistory'"
             v-model="selected.id"
             v-bind:class="{invalidBorder: $v.selected.id.$error}"
             class="form-control center dataWidth"
@@ -83,21 +89,22 @@
 
 <script>
 import { required, numeric, minValue } from 'vuelidate/lib/validators'
+import labelsProductMixin from '../../mixins/labelsProduct'
 import MessageService from '../../services/messageService'
+import nameSearchMixin from '../../mixins/nameSearch'
 import ProductService from '../../services/productService'
 import universalMixin from '../../mixins/universal'
 import Labels from '../../labels'
-
 import { mapGetters } from 'vuex'
+
+const selected = { category: null, id: null, manufactorer: null, name: '' }
 
 export default {
   name: 'ProductHeader',
-  mixins: [universalMixin],
+  mixins: [labelsProductMixin, nameSearchMixin, universalMixin],
   data () {
     return {
-      labels: Labels.product,
-      nameSearch: false,
-      selected: { category: null, id: null, manufactorer: null, name: '' }
+      selected: {...selected}
     }
   },
   methods: {
@@ -127,24 +134,14 @@ export default {
               category: this.selected.category || null,
               manufacturer: this.selected.manufactorer || null
             }
-            ProductService.getNameList(params)
-              .then(response => {
-                if (response.data.success) {
-                  this.$store.dispatch('productLoading', true)
-                  this.$store.dispatch('productName', { list: response.data.list, edition: 'nameSearch' })
-                } else {
-                  throw new Error(response.data.reason)
-                }
-              })
-              .catch(err => {
-                this.$store.dispatch('error')
-                MessageService.error.next(err.message)
-              })
+            localStorage.setItem('vue-nameParams', JSON.stringify(params))
+            this.searchingName(params)
           }
         }, this.timer)
       }
     }
   },
+  props: ['action'],
   computed: mapGetters([
     'productCategories',
     'productManufactorers'
@@ -155,6 +152,7 @@ export default {
     }
   },
   created () {
+    ProductService.clearHeader.subscribe(() => this.selected =  {...selected})
     ProductService.nameSearch.subscribe(() => this.searchName())
   }
 }

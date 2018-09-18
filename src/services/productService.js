@@ -5,6 +5,7 @@ import 'rxjs/add/observable/interval'
 import Config from '../config'
 const url = Config.url
 class ProductService {
+  clearHeader = new Subject()
   nameSearch = new Subject()
   newestOrdersInterval = Observable.interval(Config.intervalOrders);
   // constructor () {}
